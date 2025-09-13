@@ -12,6 +12,7 @@ function Navbar() {
                 <li><Link to="/showtimes">Näytösajat</Link></li>
                 <li><Link to="/groups">Ryhmät</Link></li>
                 <li><Link to="/search">Haku</Link></li>
+                <li><Link to="/reviews">Arvostelut</Link></li>
             </ul>
         </nav>
     );
