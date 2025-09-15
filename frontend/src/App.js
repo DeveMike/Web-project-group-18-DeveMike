@@ -6,6 +6,8 @@ import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoutes';
 import Showtimes from './pages/Showtimes';
 import Navbar from './components/Navbar';
+import Search from "./components/Search";
+
 import './App.css';
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/showtimes" element={<Showtimes />} />
+                <Route path="/search" element={<Search />} />
                 <Route 
                     path="/dashboard" 
                     element={
