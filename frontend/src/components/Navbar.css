@@ -1,4 +1,5 @@
 .navbar {
+    display: flex;
     background-color: #222;
     padding: 1rem;
 }
@@ -12,11 +13,13 @@
 }
 
 .navbar-links li a {
+    display: flex;
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
 
 .navbar-links li a:hover {
+    display: flex;
     text-decoration: underline;
 }
