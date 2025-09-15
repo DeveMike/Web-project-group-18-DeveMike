@@ -115,7 +115,7 @@ const addShawshank = async (imgBaseUrl) => {
     console.error("Couldn't retrieve movie from API")
     return 1
   }
-
+  
   try {
     const result = await pool.query(
       'INSERT INTO movies (tmdb_id, title, description, poster_url, release_year, genre, tmdb_rating)'
