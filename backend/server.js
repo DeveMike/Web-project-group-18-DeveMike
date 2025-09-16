@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/movies', movieRoutes);
+app.use('/api/movies', movieRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ 
@@ -46,7 +46,6 @@ app.use((err, req, res, next) => {
         details: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
 });
-
 
 const PORT = process.env.PORT || 3001;
 
