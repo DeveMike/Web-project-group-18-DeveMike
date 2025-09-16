@@ -8,7 +8,8 @@ import Showtimes from './pages/Showtimes';
 import GroupsHub from './pages/GroupsHub';
 import Navbar from './components/Navbar';
 import Search from "./components/Search";
-import Reviews from './pages/Reviews';
+import Reviews from './pages/reviews/Reviews';
+import WriteReview from './pages/reviews/WriteReview'
 import './App.css';
 
 function App() {

@@ -1,0 +1,11 @@
+div.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+ReviewButtonContainer {
+  display: flex;
+  flex-basis: 1rem;
+}
