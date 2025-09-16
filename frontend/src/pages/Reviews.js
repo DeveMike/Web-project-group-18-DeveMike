@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Search from '../components/Search'
 import authService from '../services/api'
 import '../styles/Reviews.css'
 
@@ -7,19 +8,18 @@ const Reviews = () => {
 
   useEffect(() => {
     setLoggedIn(authService.isAuthenticated)
-  })
+  }, [loggedIn])
+
   return(
     <div className="container">
       <h1>Arvostelut</h1>
-      { loggedIn ? <Creator /> : null }
+      { loggedIn ? <reviewButton /> : null }
     </div>
   )
 }
 
-const Creator = () => (
-  <div className="box" id="creatorBox">
-    <h2>Luo arvostelu</h2>
-  </div>
+const reviewButton = () => (
+  <button />
 )
 
 export default Reviews

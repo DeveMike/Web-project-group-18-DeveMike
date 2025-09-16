@@ -23,6 +23,7 @@ function App() {
                 <Route path="/search" element={<Search />} />
                 <Route path="/groups" element={<ProtectedRoute><GroupsHub /></ProtectedRoute>}/>
                 <Route path="/reviews" element={<Reviews />} />
+                <Route path="/reviews/write" element={<WriteReview />} />
                 <Route 
                     path="/dashboard" 
                     element={

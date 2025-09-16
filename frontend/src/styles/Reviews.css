@@ -12,3 +12,8 @@ div.container {
   justify-content: flex-end;
   padding: 1rem;
 }
+
+#writeBox {
+  display: flex;
+  flex-direction: column;
+}
