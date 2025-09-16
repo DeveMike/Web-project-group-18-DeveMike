@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const groupRoutes = require('./routes/groupRoutes');
+const movieRoutes = require('./routes/movieRoutes')
 require('dotenv').config();
 
 const app = express();
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/movies', movieRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ 

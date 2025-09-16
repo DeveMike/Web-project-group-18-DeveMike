@@ -36,15 +36,7 @@ const getImgBaseUrl = async () => {
 const addShawshank = async (imgBaseUrl) => {
   const id = 278
   const posterSize = 'w342'
-  const movieUrl = 'https://api.themoviedb.org/3/movie/'+id
-  const dataUrl = movieUrl+'?language=fi-FI'
-  const imgOptions = {
-    method: 'GET',
-    headers: {
-      accept: 'application/jpg',
-      Authorization: 'Bearer '+process.env.TMDB_TOKEN
-    }
-  }
+  const movieUrl = 'https://api.themoviedb.org/3/movie/'+id+'?language=fi-FI'
 
   let posterImgDir = ''
   let imgName = ''
@@ -82,7 +74,7 @@ const addShawshank = async (imgBaseUrl) => {
   }
   console.log('No such movie in DB, trying to add it')
   try {
-    const response = await fetch(dataUrl, options)
+    const response = await fetch(movieUrl, options)
     apiData = await response.json()
     movieFetchStatus = response.status
   } catch(err) {
@@ -115,7 +107,6 @@ const addShawshank = async (imgBaseUrl) => {
     console.error("Couldn't retrieve movie from API")
     return 1
   }
-<<<<<<< HEAD
   
   try {
     const result = await pool.query(
@@ -134,25 +125,5 @@ const addShawshank = async (imgBaseUrl) => {
   }
 }
 
-=======
-
-  try {
-    const result = await pool.query(
-      'INSERT INTO movies (tmdb_id, title, description, poster_url, release_year, genre, tmdb_rating)'
-      +'VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [
-        apiData.id, apiData.title, apiData.overview, './images/posters'+imgName,
-        parseInt(apiData.release_date.slice(0, 4)), apiData.genres[0].name, apiData.vote_average, 
-      ]
-    )
-    console.log(result)
-    return(0)
-  } catch(err) {
-    console.log(err)
-    return(err)
-  }
-}
-
->>>>>>> 326bf3d (script for adding one movie done)
 const run = async () => addShawshank(await getImgBaseUrl())
 run()
