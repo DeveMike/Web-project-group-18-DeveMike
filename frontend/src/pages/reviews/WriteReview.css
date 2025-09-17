@@ -4,3 +4,9 @@ div.container {
   justify-content: flex-start;
   flex-grow: 1;
 }
+
+ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
