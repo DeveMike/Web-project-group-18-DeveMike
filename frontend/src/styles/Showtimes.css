@@ -1,0 +1,39 @@
+.showtimes-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+    background-color: transparent; /* ei tarvitse erillistä taustaa */
+    color: #FFD700;
+    line-height: 1.6;
+}
+
+
+label {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: #FFD700;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+select {
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+    background-color: #222;
+    color: #FFD700;
+    border: 1px solid #FFD700;
+    border-radius: 4px;
+}
+
+.show-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem; /* enemmän väliä korttien väliin */
+    margin-top: 2rem;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
