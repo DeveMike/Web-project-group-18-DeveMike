@@ -5,9 +5,9 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoutes';
 import Showtimes from './pages/Showtimes';
+import GroupsHub from './pages/GroupsHub';
 import Navbar from './components/Navbar';
 import Search from "./components/Search";
-
 import './App.css';
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/showtimes" element={<Showtimes />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/groups" element={<ProtectedRoute><GroupsHub /></ProtectedRoute>}/>
                 <Route 
                     path="/dashboard" 
                     element={

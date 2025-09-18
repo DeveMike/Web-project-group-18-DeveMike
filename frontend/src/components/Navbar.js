@@ -10,6 +10,7 @@ function Navbar() {
                 <li><Link to="/register">Rekisteröidy</Link></li>
                 <li><Link to="/dashboard">Oma sivu</Link></li>
                 <li><Link to="/showtimes">Näytösajat</Link></li>
+                <li><Link to="/groups">Ryhmät</Link></li>
                 <li><Link to="/search">Haku</Link></li>
             </ul>
         </nav>
