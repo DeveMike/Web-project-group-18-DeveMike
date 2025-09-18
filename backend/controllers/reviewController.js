@@ -1,15 +1,14 @@
 const pool = require('../config/database.js')
 
 const insertReview = async (req, res, next) => {
-  console.log(req.body)
   if(!req.body) {
     res.status(400).json({ error: 'body puuttuu'})
   } else {
     const tmdbId = req.body.id
     const reviewText = req.body.review
-    const reviewScore = req.body.score
+    const reviewRating = req.body.rating
 
-    if(!tmdbId || !reviewText || !reviewScore) {
+    if(!tmdbId || !reviewText || !reviewRating) {
       return res.status(400).json({ error: 'Jokin puuttuu'})
     } else {
       try {
@@ -22,7 +21,7 @@ const insertReview = async (req, res, next) => {
             'INSERT INTO reviews (user_id, movie_id, review_text, rating) '
             +'VALUES ($1, $2, $3, $4) '
             +'RETURNING review_id;',
-            [req.userId, movieId, reviewText, reviewScore]
+            [req.userId, movieId, reviewText, reviewRating]
           )
           if(insertResult.rowCount === 1) {
             return res.status(201).json({ id: insertResult.rows[0].review_id })
@@ -35,4 +34,32 @@ const insertReview = async (req, res, next) => {
   }
 }
 
-module.exports = { insertReview }
+const selectReview = async (req, res, next) => {
+  const reviewId = req.params.id
+  if(!reviewId) {
+    return res.status(400).json({ error: "id puuttuu" })
+  } else {
+    try {
+      const reviewResult = await pool.query('SELECT * FROM reviews WHERE review_id=$1;', [reviewId])
+      if(reviewResult.rows.length === 0) {
+        return res.status(404).json("Arvostelua ei löydy")
+      } else {
+        const raw = reviewResult.rows[0]
+        const movieResult = await pool.query('SELECT tmdb_id FROM movies WHERE movie_id=$1;', [raw.movie_id])
+        reviewJson = {
+          id: raw.review_id,
+          movie_id: movieResult.rows[0].tmdb_id,
+          review: raw.review_text,
+          rating: raw.rating,
+          created_at: raw.created_at,
+          updated_at: raw.updated_at
+        }
+        return res.status(200).json(reviewJson)
+      }
+    } catch(err) {
+      return next(err)
+    }
+  }
+}
+
+module.exports = { insertReview, selectReview }

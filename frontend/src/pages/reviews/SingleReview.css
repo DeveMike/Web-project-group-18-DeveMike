@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  justify-content: flex-start;
+}
+
+div.db-movie {
+  display: flex;
+  flex-direction: row;
+  flex: 1 3 30%;
+}
+
+div.db-movie img {
+  height: 100%;
+  width: auto;
+}
+
+div.db-movie div {
+  display: flex;
+  flex-direction: row;
+  flex: 1 3 30%;
+}
+
+div.title-year {
+  display: flex;
+  flex: 3 1 90%;
+}
+
+div.review {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex: 3 1 80%;
+}

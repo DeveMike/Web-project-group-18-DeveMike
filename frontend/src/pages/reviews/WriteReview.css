@@ -17,10 +17,21 @@ ul {
   flex-grow: 1;
 }
 
-#reviewMovie {
+div.db-movie {
   display: flex;
   flex-direction: column;
-  flex: 1 3 20%;
+  flex: 1 3 100%;
+}
+
+div.db-movie img {
+  width: 100%;
+  height: auto;
+}
+
+.title-year {
+  display: flex;
+  flex-direction: column;
+  flex: 3 1 90%;
 }
 
 #review-inputs {
@@ -34,13 +45,13 @@ textarea {
   flex: 3 1 90%;
 }
 
-div.error-score-post {
+div.error-rating-post {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-div.score {
+div.rating {
   display: flex;
   flex-direction: row;
 }

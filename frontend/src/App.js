@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Search from "./components/Search";
 import Reviews from './pages/reviews/Reviews';
 import WriteReview from './pages/reviews/WriteReview'
+import Review from './pages/reviews/SingleReview'
 import './App.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/groups" element={<ProtectedRoute><GroupsHub /></ProtectedRoute>}/>
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/reviews/write" element={<WriteReview />} />
+                <Route path="/reviews/:id" element={<Review />} />
                 <Route 
                     path="/dashboard" 
                     element={

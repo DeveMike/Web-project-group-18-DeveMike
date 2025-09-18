@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './WriteReview.css'
+import { DbMovie } from './reviewComponents'
 
 const apiUrl = "http://localhost:3001/api/"
 
@@ -76,7 +77,7 @@ const WriteReview = ({tmdbId}) => {
 
   const Writer = () => {
     const [text, setText] = useState("")
-    const [score, setScore] = useState(0)
+    const [rating, setRating] = useState(0)
     const [clicked, setClicked] = useState(false)
     const [error, setError] = useState("")
 
@@ -89,7 +90,7 @@ const WriteReview = ({tmdbId}) => {
 
     useEffect(() => {
       const handlePost = async () => {
-        if(text && (score > 0)) {
+        if(text && (rating > 0)) {
           console.log("fetching")
           const response = await fetch(
             apiUrl+"reviews",
@@ -100,7 +101,7 @@ const WriteReview = ({tmdbId}) => {
                   "Content-Type": "application/json",
                   Authorization: "Bearer "+localStorage.getItem('token')
                 },
-              body: JSON.stringify({ id: id, review: text, score: score })
+              body: JSON.stringify({ id: id, review: text, rating: rating })
             }
           )
           const result = await response.json()
@@ -114,7 +115,7 @@ const WriteReview = ({tmdbId}) => {
         } else {
           if(text) {
             setError("Arvosana puuttuu")
-          } else if(score > 0) {
+          } else if(rating > 0) {
             setError("Arvostelu puuttuu")
           } else {
             setError("Arvostelu ja arvosana puuttuvat")
@@ -126,7 +127,7 @@ const WriteReview = ({tmdbId}) => {
         handlePost()
         setClicked(false)
       }
-    }, [clicked, score, text, navigate])
+    }, [clicked, rating, text, navigate])
 
     const onText = (event) => {
       setText(event.target.value.trim())
@@ -136,31 +137,24 @@ const WriteReview = ({tmdbId}) => {
       setClicked(true)
     }
 
-    const onScore = (event) => {
-      setScore(parseInt(event.target.value))
+    const onRating = (event) => {
+      setRating(parseInt(event.target.value))
     }
 
     return(
       <div className="container">
         <h1>Kirjoita arvostelu</h1>
         <div id="review-view">
-          <div className="movie" id="reviewMovie">
-            <img
-              alt="Kuva elokuvan julisteesta."
-              src={movie.poster_url}
-            />
-            <h3 className="title">{ movie.title }</h3>
-            <h3 className="release_year">{movie.release_year}</h3>
-          </div>
+          <DbMovie movie={movie}/>
           <div id="review-inputs">
             <textarea placeholder="Kirjoita arvostelu tähän" maxLength={3000} onChange={onText}/>
-            <div className="error-score-post">
+            <div className="error-rating-post">
               <h3>{error}</h3>
-              <div className="score">
+              <div className="rating">
                 {sequence.map((i) => {
                   return(
                     <div className="review-button">
-                      <input key={i} id={"radio"+i} type="radio" name="score" value={i} onChange={onScore}/>
+                      <input key={i} id={"radio"+i} type="radio" name="rating" value={i} onChange={onRating}/>
                       <label for={"radio"+i}>{i}</label>
                     </div>
                   )

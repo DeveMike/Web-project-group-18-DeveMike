@@ -39,7 +39,7 @@ class MovieController {
     }
   }
 
-  #formatResponse(raw) {
+  async #formatResponse(raw) {
     const response = {
       id: parseInt(raw.tmdb_id, 10),
       title: raw.title,
@@ -100,7 +100,7 @@ class MovieController {
           ]
         )
         if(result.rowCount === 1) {
-          return this.#formatResponse(result.rows[0])
+          return await this.#formatResponse(result.rows[0])
         } else {
           return Error("Couldn't add movie to database")
         }
