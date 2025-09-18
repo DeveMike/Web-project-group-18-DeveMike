@@ -29,12 +29,27 @@ class MovieController {
           this.#imgBaseUrl = imgBaseUrl
           return imgBaseUrl
         } else {
-          return this.#imgBaseUrl
+          return Error("Couldn't get image base url")
         }
       } catch(err) {
         return null
       }
+    } else {
+      return this.#imgBaseUrl
     }
+  }
+
+  #formatResponse(raw) {
+    const response = {
+      id: parseInt(raw.tmdb_id, 10),
+      title: raw.title,
+      overview: raw.description,
+      poster_url: raw.poster_url,
+      release_year: raw.release_year,
+      genre: raw.genre,
+      vote_average: raw.tmdb_rating
+    }
+    return response
   }
 
   async #dbSelect(id) {
@@ -42,21 +57,9 @@ class MovieController {
     try {
       const result = await pool.query('SELECT * FROM movies WHERE tmdb_id=$1', [id])
       if(result.rows.length === 0) {
-        console.log("doesn't exist")
         return undefined
       } else {
-        console.log("exists")
-        const raw = result.rows[0]
-        const response = {
-          id: parseInt(raw.tmdb_id, 10),
-          title: raw.title,
-          overview: raw.description,
-          poster_url: raw.poster_url,
-          release_year: raw.release_year,
-          genre: raw.genre,
-          vote_average: raw.tmdb_rating
-        }
-        return response
+        return this.#formatResponse(result.rows[0])
       }
     } catch(err) {
       return err
@@ -83,20 +86,21 @@ class MovieController {
     }
 
     // add movie to database
-    const insertMovieOk = async () => {
+    const insertMovie = async () => {
       try {
         const data = await fetchMovie()
         const imgBaseUrl = await this.#getImgBaseUrl()
         const result = await pool.query(
           'INSERT INTO movies (tmdb_id, title, description, poster_url, release_year, genre, tmdb_rating)'
-          +'VALUES ($1, $2, $3, $4, $5, $6, $7)',
+          +' VALUES ($1, $2, $3, $4, $5, $6, $7)'
+          +' RETURNING *',
           [
             data.id, data.title, data.overview, imgBaseUrl+'w185'+data.poster_path,
             parseInt(data.release_date.slice(0, 4)), data.genres[0].name, data.vote_average, 
           ]
         )
         if(result.rowCount === 1) {
-          return true
+          return this.#formatResponse(result.rows[0])
         } else {
           return Error("Couldn't add movie to database")
         }
@@ -107,20 +111,10 @@ class MovieController {
 
     try {
       const dbData = await this.#dbSelect(id)
-      console.log(dbData)
       if(dbData) {
-        console.log("sending data to browser")
         return res.status(200).json(dbData)
-      }
-      if(!dbData) {
-        if(await insertMovieOk()) {
-          const dbDataAfterInsert = await this.#dbSelect(id)
-          if(!dbDataAfterInsert) {
-            throw Error("Couldn't add movie to database")
-          } else {
-            return res.status(200).json(dbDataAfterInsert)
-          }
-        }
+      } else {
+        return res.status(201).json(await insertMovie())
       }
     } catch(err) {
       return next(err)
