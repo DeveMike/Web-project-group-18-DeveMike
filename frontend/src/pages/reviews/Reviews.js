@@ -12,7 +12,7 @@ const Reviews = () => {
 
   return(
     <div className="container">
-      <h1>Arvostelut</h1>
+      <h2>Arvostelut</h2>
       { loggedIn ? <ReviewButton /> : null }
     </div>
   )

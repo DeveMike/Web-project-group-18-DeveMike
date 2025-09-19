@@ -19,7 +19,10 @@ const SingleReview = () => {
       }
     }
     const getMovie = async (movieId, setMovieCallback) => {
-      const response = await fetch(apiUrl+"movies/"+movieId)
+      const response = await fetch(
+        apiUrl+"movies/"+movieId,
+      { method: "POST", body: { id: movieId } }
+    )
       const result = await response.json()
       setMovieCallback(result)
     }

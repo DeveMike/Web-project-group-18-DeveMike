@@ -1,185 +1,127 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import './WriteReview.css'
-import { DbMovie } from './reviewComponents'
+import MovieCard from '../../components/MovieCard.js'
 
-const apiUrl = "http://localhost:3001/api/"
-
-const WriteReview = ({tmdbId}) => {
-  const [id, setId] = useState(-1)
-  const [view, setView] = useState("")
+const WriteReview = () => {
+  const [text, setText] = useState("")
+  const [rating, setRating] = useState(0)
+  const [clicked, setClicked] = useState(false)
+  const [error, setError] = useState("")
   const [movie, setMovie] = useState({})
 
-  useEffect(() => {
-    if(!tmdbId) {
-      setView("selectMovie")
-    } else {
-      setId(tmdbId)
-      setView("writeReview")
-    }
-  }, [tmdbId])
+  const movieFetched = useRef(false)
 
-  const Search = () => {
-    const [query, setQuery] = useState("")
-    const [movies, setMovies] = useState([])
+  const params = useParams()
+  const movieId = params.id
 
-    const onText = (event) => {
-      setQuery(event.target.value)
-    }
+  const navigate = useNavigate()
 
-    const onSearch = async (event) => {
-      event.preventDefault()
-      const response = await fetch(apiUrl+"movies/search/"+encodeURI(query))
-      const result = await response.json()
-      const firstFewMovies =  result.results.slice(0, 5)
-      setMovies(firstFewMovies)
-    }
-
-    const onChoose = async (id) => {
-      setId(id)
-      const response = await fetch(apiUrl+"movies/"+id)
-      const dbMovie = await response.json()
-      setMovie(dbMovie)
-      setView("writeReview")
-    }
-    
-    return(
-      <div className="container">
-        <h1>Valitse elokuva, josta haluat kirjoittaa arvostelun</h1>
-        <div id="search">
-          <form onSubmit={onSearch}>
-            <input type="text" value={query} onChange={onText} />
-            <button type="submit">Hae</button>
-          </form>
-          <div id="results">
-            <ul>
-              {movies.map((movie) => (
-                <li key={movie.id}>
-                  <div className="movie">
-                    <img
-                      alt="Kuva elokuvan julisteesta."
-                      src={process.env.REACT_APP_IMG_BASE_URL+movie.poster_path}
-                    />
-                    <h3 className="title">{ movie.title }</h3>
-                    <h3 className="release_year">
-                      {movie.release_date.slice(0, 4)}
-                    </h3>
-                  </div>
-                  <button onClick={async () => await onChoose(movie.id)}>Arvostele tämä</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
+  let sequence = []
+  for(let i = 1; i <= 10; i++) {
+    sequence.push(i)
   }
+  const apiUrl = "http://localhost:3001/api/"
 
-  const Writer = () => {
-    const [text, setText] = useState("")
-    const [rating, setRating] = useState(0)
-    const [clicked, setClicked] = useState(false)
-    const [error, setError] = useState("")
-
-    let sequence = []
-    for(let i = 1; i <= 10; i++) {
-      sequence.push(i)
-    }
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-      const handlePost = async () => {
-        if(text && (rating > 0)) {
-          console.log("fetching")
-          const response = await fetch(
-            apiUrl+"reviews",
-            {
-              method: "POST",
-              headers:
-                {
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer "+localStorage.getItem('token')
-                },
-              body: JSON.stringify({ id: id, review: text, rating: rating })
-            }
-          )
-          const result = await response.json()
-          console.log("fetched: "+result)
-          if(response.status !== 201) {
-            setError("Arvostelun lähettämisessä tapahtui virhe")
-          } else {
-            const link = "/reviews/"+result.id
-            navigate(link)
+  useEffect(() => {
+    if(!movieFetched.current) {
+      const getMovie = async (setMovieCallback) => {
+        const response = await fetch(
+          apiUrl+"movies", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: movieId })
           }
+        )
+        if(response.status === 201 || response.status === 200) {
+          setMovieCallback(await response.json())
         } else {
-          if(text) {
-            setError("Arvosana puuttuu")
-          } else if(rating > 0) {
-            setError("Arvostelu puuttuu")
-          } else {
-            setError("Arvostelu ja arvosana puuttuvat")
-          }
+          setError('Elokuvaa ei saatu haettua')
         }
       }
+      getMovie(setMovie)
+    }
+    movieFetched.current = true;
+  }, [apiUrl, movieId, setMovie, setError])
 
-      if(clicked === true) {
-        handlePost()
-        setClicked(false)
+  useEffect(() => {
+    const handleReviewPost = async () => {
+      if(text && (rating > 0)) {
+        const response = await fetch(
+          apiUrl+"reviews", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer "+localStorage.getItem('token')
+              },
+            body: JSON.stringify({ id: movieId, review: text, rating: rating })
+          }
+        )
+        const result = await response.json()
+        if(response.status !== 201) {
+          setError("Arvostelun lähettämisessä tapahtui virhe")
+        } else {
+          const link = "/reviews/"+result.id
+          navigate(link)
+        }
+      } else {
+        if(text) {
+          setError("Arvosana puuttuu")
+        } else if(rating > 0) {
+          setError("Arvostelu puuttuu")
+        } else {
+          setError("Arvostelu ja arvosana puuttuvat")
+        }
       }
-    }, [clicked, rating, text, navigate])
-
-    const onText = (event) => {
-      setText(event.target.value.trim())
     }
 
-    const onPost = () => {
-      setClicked(true)
+    if(clicked === true) {
+      handleReviewPost()
+      setClicked(false)
     }
+  }, [clicked, rating, text, apiUrl, movieId, navigate])
 
-    const onRating = (event) => {
-      setRating(parseInt(event.target.value))
-    }
+  const onText = (event) => {
+    setText(event.target.value.trim())
+    event.target.style.height = "auto"
+    event.target.style.height ="calc("+event.target.scrollHeight+"px + "
+      + getComputedStyle(event.target).getPropertyValue("padding-left")+")"
+    // event.target.style.height = event.target.scrollHeight+"px"
+  }
 
-    return(
-      <div className="container">
-        <h1>Kirjoita arvostelu</h1>
-        <div id="review-view">
-          <DbMovie movie={movie}/>
-          <div id="review-inputs">
-            <textarea placeholder="Kirjoita arvostelu tähän" maxLength={3000} onChange={onText}/>
-            <div className="error-rating-post">
-              <h3>{error}</h3>
-              <div className="rating">
-                {sequence.map((i) => {
-                  return(
-                    <div className="review-button">
-                      <input key={i} id={"radio"+i} type="radio" name="rating" value={i} onChange={onRating}/>
-                      <label for={"radio"+i}>{i}</label>
-                    </div>
-                  )
-                })}
-              </div>
-              <button className="post" onClick={onPost}>Lähetä arvostelu</button>
+  const onPost = () => {
+    setClicked(true)
+  }
+
+  const onRating = (event) => {
+    setRating(parseInt(event.target.value))
+  }
+
+  return(
+    <div className="container">
+      <h2 className="page-name">Kirjoita arvostelu</h2>
+      <div id="review-view">
+        <MovieCard title={movie.title} image={movie.poster_url} year={movie.release_year}/>
+        <div id="review-inputs">
+          <textarea placeholder="Kirjoita arvostelu tähän" maxLength={3000} onChange={onText}/>
+          <div className="error-rating-post">
+            <h3>{error}</h3>
+            <div className="rating">
+              {sequence.map((i) => {
+                return(
+                  <div className="review-button">
+                    <input key={i} id={"radio"+i} type="radio" name="rating" value={i} onChange={onRating}/>
+                    <label for={"radio"+i}>{i}</label>
+                  </div>
+                )
+              })}
             </div>
+            <button className="post" onClick={onPost}>Lähetä arvostelu</button>
           </div>
         </div>
       </div>
-    )
-  }
-
-  const Views = () => {
-    if(view === "selectMovie") {
-      return(<Search />)
-    } else if(view === "writeReview") {
-      return(<Writer />)
-    } else {
-      console.log(id+" "+view)
-      return(<h1>a</h1>)
-    }
-  }
-
-  return(<Views />)
+    </div>
+  )
 }
 
 export default WriteReview

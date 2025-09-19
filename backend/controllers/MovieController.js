@@ -1,79 +1,78 @@
-const fs = require('fs')
-const path = require('path')
-const { Readable } = require('stream')
-
 const pool = require('../config/database.js')
 
-class MovieController {
-  #imgBaseUrl = undefined
-
-  constructor() {
-    this.apiUrl = 'https://api.themoviedb.org/3/'
-    this.options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer '+process.env.TMDB_TOKEN
-      }
-    }
+const apiUrl = 'https://api.themoviedb.org/3/'
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer '+process.env.TMDB_TOKEN
   }
+}
   
-  async #getImgBaseUrl() {
-    if(!this.#imgBaseUrl) {
-      // get base url required for fetching images from tmdb
-      try {
-        const response = await fetch('https://api.themoviedb.org/3/configuration', this.options)
-        const data = await response.json()
-        if(response.status === 200) {
-          const imgBaseUrl = data.images.base_url
-          this.#imgBaseUrl = imgBaseUrl
-          return imgBaseUrl
-        } else {
-          return Error("Couldn't get image base url")
-        }
-      } catch(err) {
-        return null
-      }
+const getImgBaseUrl = async () => {
+  try {
+    const response = await fetch('https://api.themoviedb.org/3/configuration', options)
+    const data = await response.json()
+    if(response.status === 200) {
+      const imgBaseUrl = data.images.base_url
+      return imgBaseUrl
     } else {
-      return this.#imgBaseUrl
+      return Error("Couldn't get image base url")
     }
+  } catch(err) {
+    return err
   }
+}
 
-  async #formatResponse(raw) {
-    const response = {
-      id: parseInt(raw.tmdb_id, 10),
-      title: raw.title,
-      overview: raw.description,
-      poster_url: raw.poster_url,
-      release_year: raw.release_year,
-      genre: raw.genre,
-      vote_average: raw.tmdb_rating
+const formatResponse = (raw) => {
+  const response = {
+    id: parseInt(raw.tmdb_id, 10),
+    title: raw.title,
+    overview: raw.description,
+    poster_url: raw.poster_url,
+    release_year: raw.release_year,
+    genre: raw.genre,
+    vote_average: raw.tmdb_rating
+  }
+  return response
+}
+
+const dbSelect = async (id) => {
+  // check if movie exists in database
+  try {
+    const result = await pool.query('SELECT * FROM movies WHERE tmdb_id=$1', [id])
+    if(result.rows.length === 0) {
+      return null
+    } else {
+      return formatResponse(result.rows[0])
     }
-    return response
+  } catch(err) {
+    return err
   }
+}
 
-  async #dbSelect(id) {
-    // check if movie exists in database
-    try {
-      const result = await pool.query('SELECT * FROM movies WHERE tmdb_id=$1', [id])
-      if(result.rows.length === 0) {
-        return undefined
+const add = async (req, res, next) => {
+  const bodyId = req.body.id
+  if(!bodyId) {
+    return res.status(400).json({ error: 'body tai id puuttuu'})
+  } else {
+    const checkId = () => {
+      if(((typeof bodyId) === 'number') && bodyId.isInt()) {
+        return bodyId.toString(10)
+      } else if(((typeof bodyId) === 'string') && parseInt(bodyId, 10)) {
+        return bodyId
       } else {
-        return this.#formatResponse(result.rows[0])
+        return res.status(400).json({ error: 'Huonosti muodostettu id'} )
       }
-    } catch(err) {
-      return err
     }
-  }
 
-  async getMovie(req, res, next) {
-    const id = req.params.id.toString()
+    const id = checkId()
 
     // get movie from tmdb if it isn't in the database
     const fetchMovie = async () => {
       try {
-        const movieUrl = this.apiUrl+'movie/'+id+'?language=fi-FI'
-        const response = await fetch(movieUrl, this.options)
+        const movieUrl = apiUrl+'movie/'+id+'?language=fi-FI'
+        const response = await fetch(movieUrl, options)
         const data = await response.json()
         if(response.status === 200) {
           return data
@@ -89,7 +88,7 @@ class MovieController {
     const insertMovie = async () => {
       try {
         const data = await fetchMovie()
-        const imgBaseUrl = await this.#getImgBaseUrl()
+        const imgBaseUrl = await getImgBaseUrl()
         const result = await pool.query(
           'INSERT INTO movies (tmdb_id, title, description, poster_url, release_year, genre, tmdb_rating)'
           +' VALUES ($1, $2, $3, $4, $5, $6, $7)'
@@ -100,9 +99,9 @@ class MovieController {
           ]
         )
         if(result.rowCount === 1) {
-          return await this.#formatResponse(result.rows[0])
+          return formatResponse(result.rows[0])
         } else {
-          return Error("Couldn't add movie to database")
+          return Error("Elokuvaa ei saatu lisättyä tietokantaan")
         }
       } catch(err) {
         return err
@@ -110,7 +109,7 @@ class MovieController {
     }
 
     try {
-      const dbData = await this.#dbSelect(id)
+      const dbData = await dbSelect(id)
       if(dbData) {
         return res.status(200).json(dbData)
       } else {
@@ -120,21 +119,23 @@ class MovieController {
       return next(err)
     }
   }
+}
 
-  async search(req, res, next) {
-    try {
-      const response = await fetch(
-        this.apiUrl+'search/movie?query='+req.params.query+'&language=fi-FI',
-        this.options
-      )
-      const data = await response.json()
+const search = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      apiUrl+'search/movie?query='+req.params.query+'&language=fi-FI',
+      options
+    )
+    const data = await response.json()
+    if(response.status === 200) {
       return res.status(200).json(data)
-    } catch(err) {
-      return next(err)
+    } else {
+      return next(Error("TMDB-haku ei onnistunut"))
     }
+  } catch(err) {
+    return next(err)
   }
 }
 
-const movieController = new MovieController()
-
-module.exports = movieController
+module.exports = { add, search }
