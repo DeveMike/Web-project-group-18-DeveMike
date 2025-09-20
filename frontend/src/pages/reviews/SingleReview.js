@@ -37,7 +37,7 @@ const SingleReview = () => {
     <div className="container" id="single-review-container">
       <h2 class="page-name">Arvostelu elokuvasta</h2>
       <MovieCard title={movie.title} image={movie.poster_url} year={movie.release_year}/>
-      <Review text={review.review} />
+      <Review text={review.review} rating={review.rating} putRatingBelow={true} />
     </div>
   )
 }

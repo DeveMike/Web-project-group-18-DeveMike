@@ -6,7 +6,7 @@ div#single-review-container {
 }
 
 h2.page-name {
-  color: #FFD700;
+  color: #ffd900;
 }
 
 div#single-review-container div.movie-card {
@@ -40,13 +40,20 @@ div#single-review-container img {
 
 div#single-review-container div.review {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   flex: auto;
-  margin: 1.5rem 0.5rem 2rem;
+  margin: 1.2rem 0.5rem 2rem;
   max-width: 40rem;
   width: calc(100% - 1rem);
   align-self: center;
+}
+
+div#single-review-container div.review h4 {
+  color: #ffea70;
+  font-size: 1.5rem;
+  align-self: center;
+  margin-top: 0.3rem;
 }
 
 div#single-review-container p {
