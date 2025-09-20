@@ -1,16 +1,22 @@
-h2 {
-  color: #FFD700; /* elokuvan nimi keltaisella */
-  margin-top: 0;
-}
-
-div.container {
+div#reviews-list-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex-grow: 1;
+  flex: 1 1 100%;
 }
 
-ReviewButtonContainer {
+div#reviews-list-container h2 {
+  color: #FFD700;
+  margin: 1rem;
+}
+
+div#review-button {
   display: flex;
-  flex-basis: 1rem;
+  flex-direction: row;
+  justify-content: flex-end;
+  position: sticky;
+  position: bottom;
+  padding: 0.5rem 1rem 2rem ;
+  background-color: #222;
+  box-shadow: 0 -0.5rem 0.5rem #000;
 }

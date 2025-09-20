@@ -26,14 +26,14 @@ const SearchFilmToReview = () => {
   }
   
   return(
-    <div className="container">
+    <div className="container" id="review-search-container">
       <h2>Valitse elokuva, josta haluat kirjoittaa arvostelun</h2>
-      <div id="search">
+      <div id="search-to-review">
         <form onSubmit={onSearch}>
           <input type="text" value={query} onChange={onText} />
           <button type="submit">Hae</button>
         </form>
-        <ul>
+        <div id="review-search-list">
           {movies.map((movie) => (
             <MovieCard
               title={movie.title}
@@ -42,7 +42,7 @@ const SearchFilmToReview = () => {
               onClick={() => onChoose(movie.id)}
             />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   )

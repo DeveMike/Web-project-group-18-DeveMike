@@ -52,6 +52,7 @@ const dbSelect = async (id) => {
 }
 
 const add = async (req, res, next) => {
+  console.log(req.body)
   const bodyId = req.body.id
   if(!bodyId) {
     return res.status(400).json({ error: 'body tai id puuttuu'})
@@ -88,14 +89,22 @@ const add = async (req, res, next) => {
     const insertMovie = async () => {
       try {
         const data = await fetchMovie()
+        console.log(data)
         const imgBaseUrl = await getImgBaseUrl()
+        let genreName = undefined
+        console.log(data.genres)
+        if(!data.genres || data.genres.length == 0) {
+          genreName = null
+        } else {
+          genreName = data.genres[0].name
+        }
         const result = await pool.query(
           'INSERT INTO movies (tmdb_id, title, description, poster_url, release_year, genre, tmdb_rating)'
           +' VALUES ($1, $2, $3, $4, $5, $6, $7)'
           +' RETURNING *',
           [
             data.id, data.title, data.overview, imgBaseUrl+'w185'+data.poster_path,
-            parseInt(data.release_date.slice(0, 4)), data.genres[0].name, data.vote_average, 
+            parseInt(data.release_date.slice(0, 4)), genreName, data.vote_average, 
           ]
         )
         if(result.rowCount === 1) {
@@ -113,7 +122,12 @@ const add = async (req, res, next) => {
       if(dbData) {
         return res.status(200).json(dbData)
       } else {
-        return res.status(201).json(await insertMovie())
+        insertData = await insertMovie()
+        console.log(insertData)
+        if(insertData.title) {
+          return res.status(201).json(insertData)
+        }
+        return next(Error("Elokuvaa ei saatu lisättyä"))
       }
     } catch(err) {
       return next(err)

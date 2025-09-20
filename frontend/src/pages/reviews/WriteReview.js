@@ -58,11 +58,13 @@ const WriteReview = () => {
           }
         )
         const result = await response.json()
-        if(response.status !== 201) {
-          setError("Arvostelun lähettämisessä tapahtui virhe")
-        } else {
+        if(response.status === 201) {
           const link = "/reviews/"+result.id
           navigate(link)
+        } else if(response.status === 403) {
+          setError("Istuntosi on vanhentunut")
+        } else {
+          setError("Arvostelun lähettämisessä tapahtui virhe")
         }
       } else {
         if(text) {
@@ -103,7 +105,7 @@ const WriteReview = () => {
       <div id="review-view">
         <MovieCard title={movie.title} image={movie.poster_url} year={movie.release_year}/>
         <div id="review-inputs">
-          <textarea placeholder="Kirjoita arvostelu tähän" maxLength={3000} onChange={onText}/>
+          <textarea placeholder="Kirjoita arvostelu tähän" maxLength={10000} onChange={onText}/>
           <div className="error-rating-post">
             <h3>{error}</h3>
             <div className="rating">

@@ -1,35 +1,57 @@
-.container {
+div#single-review-container {
   display: flex;
   flex-direction: column;
   flex: 1 1 100%;
   justify-content: flex-start;
 }
 
-div.db-movie {
+h2.page-name {
+  color: #FFD700;
+}
+
+div#single-review-container div.movie-card {
   display: flex;
   flex-direction: row;
-  flex: 1 3 30%;
+  flex: 0 1 7rem;
+  pointer-events: none;
+  align-self: center;
+  margin: 0 1.5rem;
+  max-width: 30rem;
+  width: calc(100% - 3rem);
+  box-shadow: none;
 }
 
-div.db-movie img {
-  height: 100%;
-  width: auto;
+div#single-review-container div.movie-card h3 {
+  font-size: 1.6rem;
 }
 
-div.db-movie div {
-  display: flex;
-  flex-direction: row;
-  flex: 1 3 30%;
+div#single-review-container h2.page-name {
+  align-self: center;
+  max-width: 40rem;
 }
 
-div.title-year {
-  display: flex;
-  flex: 3 1 90%;
+div#single-review-container img {
+  width: 7rem;
+  height: auto;
+  object-fit: contain;
+  object-position: top;
+  flex: 0 1 7rem;
 }
 
-div.review {
+div#single-review-container div.review {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex: 3 1 80%;
+  flex: auto;
+  margin: 1.5rem 0.5rem 2rem;
+  max-width: 40rem;
+  width: calc(100% - 1rem);
+  align-self: center;
+}
+
+div#single-review-container p {
+  white-space: pre-line;
+  background-color: #444;
+  padding: 1rem;
+  border-radius: 0.6rem;
 }

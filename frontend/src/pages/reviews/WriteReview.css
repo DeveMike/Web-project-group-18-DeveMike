@@ -2,7 +2,7 @@ div.container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  flex: auto;
+  flex: 1 1 content;
 }
 
 h2.page-name {
@@ -15,21 +15,22 @@ div#review-view {
   flex: auto;
 }
 
-div.movie-card {
+div#review-view div.movie-card {
   display: flex;
   flex-direction: row;
   pointer-events: none;
   flex: 0 1 auto;
   margin-left: 1rem;
   margin-right: 1rem;
+  box-shadow: none;
 }
 
-div.movie-card img {
+div#review-view img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
-  flex: 0 1 10rem;
+  flex: 0 1 7rem;
 }
 
 div.title-and-year {
@@ -66,7 +67,7 @@ div.error-rating-post {
 }
 
 div.error-rating-post h3 {
-  color: #fff;
+  color: #f00;
 }
 
 div.rating {

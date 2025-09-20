@@ -1,10 +1,12 @@
 .navbar {
+    box-sizing: border-box;
     display: flex;
     background-color: #222;
     padding: 1rem;
-    position: fixed;
-    top: 0;
-    box-shadow: 0 0 1rem 0.6rem #000;
+    position: sticky;
+    top: 0px;
+    box-shadow: 0 0.5rem 0.5rem #000;
+    flex: 0 0 content;
 }
 
 .navbar-links {

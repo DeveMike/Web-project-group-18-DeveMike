@@ -13,7 +13,6 @@ body {
 }
 
 code {
-  display: flex;
   height: 100%;
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

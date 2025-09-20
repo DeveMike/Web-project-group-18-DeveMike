@@ -11,7 +11,7 @@ const Reviews = () => {
   }, [loggedIn])
 
   return(
-    <div className="container">
+    <div className="container" id="reviews-list-container">
       <h2>Arvostelut</h2>
       { loggedIn ? <ReviewButton /> : null }
     </div>
@@ -19,9 +19,9 @@ const Reviews = () => {
 }
 
 const ReviewButton = () => (
-  <div className="container" id="review-button-container">
+  <div id="review-button">
     <Link to="/reviews/write">
-      <button>
+      <button id="review-button">
         Kirjoita arvostelu
       </button>
     </Link>

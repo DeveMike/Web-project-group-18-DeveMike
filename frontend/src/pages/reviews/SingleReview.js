@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { DbMovie, Review } from "./reviewComponents"
+import { Review } from "../../components/reviewComponents.js"
+import MovieCard from "../../components/MovieCard.js"
 import "./SingleReview.css"
 
 const SingleReview = () => {
   const [review, setReview] = useState({})
   const [movie, setMovie] = useState({})
   const { id } = useParams()
-  const apiUrl = "http://localhost:3001/api/"
 
   useEffect(() => {
+    const apiUrl = "http://localhost:3001/api/"
     const getReview = async (setReviewCallback, getMovieCallback) => {
       const response = await fetch(apiUrl+"reviews/"+id)
       const result = await response.json()
@@ -20,19 +21,23 @@ const SingleReview = () => {
     }
     const getMovie = async (movieId, setMovieCallback) => {
       const response = await fetch(
-        apiUrl+"movies/"+movieId,
-      { method: "POST", body: { id: movieId } }
+        apiUrl+"movies/", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ id: movieId })
+        }
     )
       const result = await response.json()
       setMovieCallback(result)
     }
     getReview(setReview, getMovie)
-  }, [id, apiUrl, setMovie])
+  }, [id, setMovie])
   
   return(
-    <div className="container">
-      <DbMovie movie={movie} />
-      <Review review={review} />
+    <div className="container" id="single-review-container">
+      <h2 class="page-name">Arvostelu elokuvasta</h2>
+      <MovieCard title={movie.title} image={movie.poster_url} year={movie.release_year}/>
+      <Review text={review.review} />
     </div>
   )
 }
