@@ -52,7 +52,6 @@ const dbSelect = async (id) => {
 }
 
 const add = async (req, res, next) => {
-  console.log(req.body)
   const bodyId = req.body.id
   if(!bodyId) {
     return res.status(400).json({ error: 'body tai id puuttuu'})
@@ -89,10 +88,8 @@ const add = async (req, res, next) => {
     const insertMovie = async () => {
       try {
         const data = await fetchMovie()
-        console.log(data)
         const imgBaseUrl = await getImgBaseUrl()
         let genreName = undefined
-        console.log(data.genres)
         if(!data.genres || data.genres.length == 0) {
           genreName = null
         } else {
@@ -123,7 +120,6 @@ const add = async (req, res, next) => {
         return res.status(200).json(dbData)
       } else {
         insertData = await insertMovie()
-        console.log(insertData)
         if(insertData.title) {
           return res.status(201).json(insertData)
         }
