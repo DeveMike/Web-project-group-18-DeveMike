@@ -1,18 +1,5 @@
 const pool = require('../config/database.js')
 
-const formatReceivedReview = async (raw) => {
-  const movieResult = await pool.query('SELECT tmdb_id FROM movies WHERE movie_id=$1;', [raw.movie_id])
-  formattedReview = {
-    id: raw.review_id,
-    movie_id: movieResult.rows[0].tmdb_id,
-    review: raw.review_text,
-    rating: raw.rating,
-    created_at: raw.created_at,
-    updated_at: raw.updated_at
-  }
-  return formattedReview
-}
-
 const insertReview = async (req, res, next) => {
   if(!req.body) {
     res.status(400).json({ error: 'body puuttuu'})
@@ -53,13 +40,16 @@ const selectReview = async (req, res, next) => {
     return res.status(400).json({ error: "id puuttuu" })
   } else {
     try {
-      const reviewResult = await pool.query('SELECT * FROM reviews WHERE review_id=$1;', [reviewId])
+      const reviewResult = await pool.query(
+        'SELECT review_id, review_text, rating, reviews.created_at tmdb_id, title, poster_url, release_year'
+        +' FROM reviews INNER JOIN movies ON reviews.movie_id=movies.movie_id'
+        +' WHERE review_id=$1;',
+        [reviewId]
+      )
       if(reviewResult.rows.length === 0) {
         return res.status(404).json("Arvostelua ei löydy")
       } else {
-        const raw = reviewResult.rows[0]
-        const reviewJson = await formatReceivedReview(raw)
-        return res.status(200).json(reviewJson)
+        return res.status(200).json(reviewResult.rows[0])
       }
     } catch(err) {
       return next(err)
@@ -68,18 +58,13 @@ const selectReview = async (req, res, next) => {
 }
 
 const selectReviewsForMainPage = async (req, res, next) => {
-  const formatAll = async (reviews) => {
-    const formattedArray = []
-    for(const item of reviews) {
-      const formatted = await formatReceivedReview(item)
-      formattedArray.push(formatted)
-    }
-    return formattedArray
-  }
   try {
-    result = await pool.query('SELECT * FROM reviews ORDER BY created_at DESC LIMIT 30;')
-    const formattedArray = await formatAll(result.rows)
-    res.status(200).json(formattedArray)
+    result = await pool.query(
+      'SELECT review_id, review_text, rating, reviews.created_at tmdb_id, title, poster_url, release_year'
+      +' FROM reviews INNER JOIN movies ON reviews.movie_id=movies.movie_id'
+      +' ORDER BY reviews.created_at DESC LIMIT 30;'
+    )
+    res.status(200).json(result.rows)
   } catch(err) {
     return next(err)
   }

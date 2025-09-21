@@ -6,38 +6,25 @@ import "./SingleReview.css"
 
 const SingleReview = () => {
   const [review, setReview] = useState({})
-  const [movie, setMovie] = useState({})
   const { id } = useParams()
 
   useEffect(() => {
     const apiUrl = "http://localhost:3001/api/"
-    const getReview = async (setReviewCallback, getMovieCallback) => {
+    const getReview = async (setReviewCallback) => {
       const response = await fetch(apiUrl+"reviews/"+id)
       const result = await response.json()
       if(response.status === 200) {
         setReviewCallback(result)
-        getMovieCallback(result.movie_id, setMovie)
       }
     }
-    const getMovie = async (movieId, setMovieCallback) => {
-      const response = await fetch(
-        apiUrl+"movies/", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({ id: movieId })
-        }
-    )
-      const result = await response.json()
-      setMovieCallback(result)
-    }
-    getReview(setReview, getMovie)
-  }, [id, setMovie])
+    getReview(setReview)
+  }, [id, setReview])
   
   return(
     <div className="container" id="single-review-container">
       <h2 class="page-name">Arvostelu elokuvasta</h2>
-      <MovieCard title={movie.title} image={movie.poster_url} year={movie.release_year}/>
-      <Review text={review.review} rating={review.rating} full={true} />
+      <MovieCard title={review.title} image={review.poster_url} year={review.release_year}/>
+      <Review text={review.review_text} rating={review.rating} full={true} />
     </div>
   )
 }

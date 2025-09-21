@@ -37,7 +37,6 @@ div#review-search-list div.movie-card {
   display: flex;
   flex-direction: column;
   flex: 1 1 14rem;
-  max-width: 33%;
   align-items: center;
 }
 
