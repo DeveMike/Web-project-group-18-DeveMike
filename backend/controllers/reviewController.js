@@ -25,7 +25,7 @@ const insertReview = async (req, res, next) => {
       return res.status(400).json({ error: 'Jokin puuttuu'})
     } else {
       try {
-        const movieResult = await pool.query('SELECT movie_id FROM movies WHERE tmdb_id=$1', [tmdbId])
+        const movieResult = await pool.query('SELECT movie_id FROM movies WHERE tmdb_id=$1;', [tmdbId])
         if(movieResult.rows.length === 0) {
           return res.status(404).json('Elokuvaa ei löydy')
         } else {
@@ -68,14 +68,18 @@ const selectReview = async (req, res, next) => {
 }
 
 const selectReviewsForMainPage = async (req, res, next) => {
-  try {
-    result = pool.query('SELECT * FROM reviews ORDER BY created_at DESC LIMIT 5')
+  const formatAll = async (reviews) => {
     const formattedArray = []
-    for(item in result.rows) {
+    for(const item of reviews) {
       const formatted = await formatReceivedReview(item)
       formattedArray.push(formatted)
     }
     return formattedArray
+  }
+  try {
+    result = await pool.query('SELECT * FROM reviews ORDER BY created_at DESC LIMIT 30;')
+    const formattedArray = await formatAll(result.rows)
+    res.status(200).json(formattedArray)
   } catch(err) {
     return next(err)
   }

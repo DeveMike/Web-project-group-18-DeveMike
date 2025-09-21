@@ -2,7 +2,7 @@ div#reviews-list-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 1 1 100%;
+  flex: 1 1 content;
 }
 
 div#reviews-list-container h2 {
@@ -10,12 +10,85 @@ div#reviews-list-container h2 {
   margin: 1rem;
 }
 
+div#recent-reviews {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: center;
+  align-items: stretch;
+  max-width: 90rem;
+  flex: 1 1 content;
+}
+
+div#recent-reviews a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 25rem;
+  max-width: 29rem;
+  min-width: 10rem;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+div#recent-reviews div.single-review {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  border-radius: 0.7rem;
+  flex: 1 1 0px;
+}
+
+div#recent-reviews div.movie-card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  pointer-events: none;
+  box-shadow: none;
+  background-color: #0000;
+  align-items: flex-start;
+}
+
+div#recent-reviews div.title-and-year {
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+div#recent-reviews img {
+  width: auto;
+  height: 9rem;
+  object-fit: contain;
+  object-position: top;
+}
+
+div#recent-reviews div.review {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0px;
+}
+
+div#recent-reviews div.review h4 {
+  padding-left: 2rem;
+}
+
+div#recent-reviews p {
+  display: -webkit-box;
+  min-width: 0;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4rem;
+  height: 7rem;
+  padding: 1rem;
+}
+
 div#review-button {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   position: sticky;
-  position: bottom;
+  bottom: 0;
   padding: 0.5rem 1rem 2rem ;
   background-color: #222;
   box-shadow: 0 -0.5rem 0.5rem #000;

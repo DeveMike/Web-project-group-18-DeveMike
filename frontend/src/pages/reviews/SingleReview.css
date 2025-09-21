@@ -49,8 +49,11 @@ div#single-review-container div.review {
   align-self: center;
 }
 
-div#single-review-container div.review h4 {
+div.review h4 {
   color: #ffea70;
+}
+
+div#single-review-container div.review h4 {
   font-size: 1.5rem;
   align-self: center;
   margin-top: 0.3rem;
@@ -61,4 +64,5 @@ div#single-review-container p {
   background-color: #444;
   padding: 1rem;
   border-radius: 0.6rem;
+  flex: 1 1 0px;
 }

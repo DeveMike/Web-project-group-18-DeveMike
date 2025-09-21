@@ -1,6 +1,6 @@
 import "../styles/reviewComponents.css"
 
-const Review = ({text, rating, putRatingBelow}) => {
+const Review = ({text, rating, full}) => {
   const Card = () => {
     return(
       <div className="review">
@@ -19,7 +19,7 @@ const Review = ({text, rating, putRatingBelow}) => {
   }
 
   return(
-    (!putRatingBelow) ? <Card /> : <Full />
+    (!full) ? <Card /> : <Full />
   )
 }
 

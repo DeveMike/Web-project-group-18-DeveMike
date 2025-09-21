@@ -40,7 +40,7 @@ const formatResponse = (raw) => {
 const dbSelect = async (id) => {
   // check if movie exists in database
   try {
-    const result = await pool.query('SELECT * FROM movies WHERE tmdb_id=$1', [id])
+    const result = await pool.query('SELECT * FROM movies WHERE tmdb_id=$1;', [id])
     if(result.rows.length === 0) {
       return null
     } else {
@@ -98,7 +98,7 @@ const add = async (req, res, next) => {
         const result = await pool.query(
           'INSERT INTO movies (tmdb_id, title, description, poster_url, release_year, genre, tmdb_rating)'
           +' VALUES ($1, $2, $3, $4, $5, $6, $7)'
-          +' RETURNING *',
+          +' RETURNING *;',
           [
             data.id, data.title, data.overview, imgBaseUrl+'w185'+data.poster_path,
             parseInt(data.release_date.slice(0, 4)), genreName, data.vote_average, 
