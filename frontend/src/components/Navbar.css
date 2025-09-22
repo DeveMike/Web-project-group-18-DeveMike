@@ -1,6 +1,12 @@
 .navbar {
+    box-sizing: border-box;
+    display: flex;
     background-color: #222;
     padding: 1rem;
+    position: sticky;
+    top: 0px;
+    box-shadow: 0 0.5rem 0.5rem #000;
+    flex: 0 0 content;
 }
 
 .navbar-links {
@@ -12,11 +18,13 @@
 }
 
 .navbar-links li a {
+    display: flex;
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
 
 .navbar-links li a:hover {
+    display: flex;
     text-decoration: underline;
 }

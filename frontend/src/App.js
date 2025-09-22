@@ -8,6 +8,10 @@ import Showtimes from './pages/Showtimes';
 import GroupsHub from './pages/GroupsHub';
 import Navbar from './components/Navbar';
 import Search from "./components/Search";
+import Reviews from './pages/reviews/Reviews';
+import SearchFilmToReview from './pages/reviews/SearchFilmToReview';
+import WriteReview from './pages/reviews/WriteReview';
+import Review from './pages/reviews/SingleReview';
 import './App.css';
 
 function App() {
@@ -21,6 +25,10 @@ function App() {
                 <Route path="/showtimes" element={<Showtimes />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/groups" element={<ProtectedRoute><GroupsHub /></ProtectedRoute>}/>
+                <Route path="/reviews" element={<Reviews />} />
+                <Route path="/reviews/write" element={<SearchFilmToReview />} />
+                <Route path="/reviews/write/:id" element={<WriteReview />} />
+                <Route path="/reviews/:id" element={<Review />} />
                 <Route 
                     path="/dashboard" 
                     element={
