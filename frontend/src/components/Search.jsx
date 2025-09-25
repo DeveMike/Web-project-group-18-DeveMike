@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Search.css";
+import { addMovieToList, getFavoriteLists } from "../services/favoritesService";
 
 const GENRES = [
   { id: 28, name: "Toiminta" },
@@ -18,13 +19,57 @@ export default function Search() {
   const [year, setYear] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [favoriteLists, setFavoriteLists] = useState([]);
+  const [selectedList, setSelectedList] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [movieToAdd, setMovieToAdd] = useState(null);
 
   const isLoggedIn = !!localStorage.getItem("token");
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      getFavoriteLists()
+        .then((res) => {
+          const lists = res.data || [];
+          setFavoriteLists(lists);
+          if (lists.length > 0) {
+            setSelectedList(lists[0].list_id.toString());
+          }
+        })
+        .catch((err) => {
+          console.error("Virhe suosikkilistojen haussa:", err);
+        });
+    }
+  }, [isLoggedIn]);
+
   const handleAddFavorite = (movie) => {
-    // myöhemmin tähän axios POST backendille
-    console.log("Lisätään suosikkeihin:", movie);
-    alert(movie.title + " lisättiin suosikkeihin!");
+    setMovieToAdd(movie);
+    setShowModal(true);
+  };
+
+  const handleConfirmAddFavorite = async () => {
+    try {
+      if (!selectedList) {
+        alert("Valitse suosikkilista ennen lisäämistä.");
+        return;
+      }
+      const listId = parseInt(selectedList, 10);
+
+      await addMovieToList(listId, {
+        tmdb_id: movieToAdd.id,
+        title: movieToAdd.title,
+        poster_url: `https://image.tmdb.org/t/p/w200${movieToAdd.poster_path}`,
+        release_year: movieToAdd.release_date?.slice(0, 4),
+        tmdb_rating: movieToAdd.vote_average,
+      });
+
+      alert(`${movieToAdd.title} lisättiin suosikkeihin!`);
+      setShowModal(false);
+      setMovieToAdd(null);
+    } catch (err) {
+      console.error("Suosikkiin lisäys epäonnistui:", err);
+      alert("Virhe lisättäessä suosikkiin");
+    }
   };
 
   //TMDB Haku
@@ -67,7 +112,7 @@ export default function Search() {
       setLoading(false);
     }
   };
-    
+
   //UI
   return (
     <div className="search-container">
@@ -106,6 +151,37 @@ export default function Search() {
       </div>
 
       {loading && <p>Ladataan…</p>}
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Valitse suosikkilista</h3>
+            <select
+              value={selectedList}
+              onChange={(e) => setSelectedList(e.target.value)}
+            >
+              {favoriteLists.map((list) => (
+                <option key={list.list_id} value={list.list_id}>
+                  {list.list_name}
+                </option>
+              ))}
+            </select>
+            <div className="modal-buttons">
+              <button
+                className="confirm-btn"
+                onClick={handleConfirmAddFavorite}
+              >Vahvista</button>
+              <button
+                className="cancel-btn"
+                onClick={() => {
+                  setShowModal(false);
+                  setMovieToAdd(null);
+                }}
+              >Peruuta</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="results-grid">
         {results.map((m) => (
