@@ -13,6 +13,8 @@ function Navbar() {
                 <li><Link to="/groups">Ryhmät</Link></li>
                 <li><Link to="/search">Haku</Link></li>
                 <li><Link to="/reviews">Arvostelut</Link></li>
+                <li><Link to="/favorites">Suosikit</Link></li>
+                
             </ul>
         </nav>
     );

@@ -12,6 +12,8 @@ import Reviews from './pages/reviews/Reviews';
 import SearchFilmToReview from './pages/reviews/SearchFilmToReview';
 import WriteReview from './pages/reviews/WriteReview';
 import Review from './pages/reviews/SingleReview';
+import Favorites from './pages/Favorites';
+import FavoritesShared from "./pages/FavoritesShared";
 import './App.css';
 
 function App() {
@@ -37,6 +39,15 @@ function App() {
                         </ProtectedRoute>
                     } 
                 />
+                <Route
+                    path="/favorites"
+                    element={
+                        <ProtectedRoute>
+                            <Favorites />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route path="/favorites/shared/:shareId" element={<FavoritesShared />} />
             </Routes>
         </Router>
     );
