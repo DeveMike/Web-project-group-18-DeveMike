@@ -7,6 +7,7 @@ describe('Test review browsing', function() {
   const reviewUrl = apiUrl+'reviews/'
 
   let reviews = []
+  let token = ''
 
   async function deleteAccount(token) {
     const response = await fetch(authUrl+'delete-account/', {
@@ -54,7 +55,7 @@ describe('Test review browsing', function() {
       }
     }
 
-    const token = await getToken()
+    const tokenSet = token = await getToken()
     
     async function addReview(review) {
       const movieResponse = await fetch(
@@ -68,7 +69,7 @@ describe('Test review browsing', function() {
 
       const response = await fetch(reviewUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer '+token },
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer '+tokenSet },
         body: JSON.stringify({ id: movieResult.id, review: review.review, rating: review.rating })
       })
       const result = await response.json()
@@ -95,5 +96,10 @@ describe('Test review browsing', function() {
 
   it('should have correct review text', function() {
     expect(reviews[2].review_text).to.equal(r2.review)
+  })
+
+
+  after(async function() {
+    return await deleteAccount(token)
   })
 })
