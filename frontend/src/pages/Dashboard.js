@@ -31,7 +31,7 @@ function Dashboard() {
         <div className="dashboard-container">
             <div className="dashboard-content">
                 <div className="dashboard-header">
-                    <h1>Tervetuloa elokuvasovellukseen!</h1>
+                    <h1>Tervetuloa LeffaHubiin!</h1>
                     <p>Olet kirjautunut sisään</p>
                 </div>
 
