@@ -15,8 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-
 app.use('/api/groups', groupRoutes);
+app.use('/api/movies', movieRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.use("/api/favorites", favoritesRoutes);
 
@@ -33,10 +34,6 @@ app.get('/', (req, res) => {
         }
     });
 });
-
-app.use('/api/auth', authRoutes);
-app.use('/api/movies', movieRoutes);
-app.use('/api/reviews', reviewRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ 
