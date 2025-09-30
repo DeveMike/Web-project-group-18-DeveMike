@@ -145,7 +145,10 @@ const search = async (req, res, next) => {
     )
     const data = await response.json()
     if(response.status === 200) {
-      return res.status(200).json(data)
+      const imgBaseUrl = await getImgBaseUrl()
+      return res.status(200).json({img_base_url: imgBaseUrl, results: data.results})
+    } else if(response.status(404)) {
+      return res.status(404).json({ error: "Haulla ei löytynyt elokuvia" })
     } else {
       return next(Error("TMDB-haku ei onnistunut"))
     }
