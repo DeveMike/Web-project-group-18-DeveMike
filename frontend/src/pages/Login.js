@@ -36,6 +36,10 @@ function Login() {
 
     return (
         <div className="auth-container">
+            <div className="auth-welcome">
+                <h1>Tervetuloa LeffaHubiin</h1>
+                <p>Löydä elokuvat, ryhmät ja arvostelut</p>
+                </div>
             <form className="auth-form" onSubmit={handleSubmit}>
                 <h2>Kirjaudu sisään</h2>
                 

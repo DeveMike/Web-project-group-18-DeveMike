@@ -14,6 +14,7 @@ import WriteReview from './pages/reviews/WriteReview';
 import Review from './pages/reviews/SingleReview';
 import Favorites from './pages/Favorites';
 import FavoritesShared from "./pages/FavoritesShared";
+
 import './App.css';
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/favorites/shared/:shareId" element={<FavoritesShared />} />
             </Routes>
         </Router>
+
     );
 }
 

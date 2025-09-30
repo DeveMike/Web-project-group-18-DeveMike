@@ -5,6 +5,7 @@ import './Navbar.css'; // tyylit sitten joskus
 function Navbar() {
     return (
         <nav className="navbar">
+            <div className="navbar-brand">LeffaHub</div>
             <ul className="navbar-links">
                 <li><Link to="/login">Kirjaudu</Link></li>
                 <li><Link to="/register">Rekisteröidy</Link></li>
