@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: transparent;
     padding: 20px;
 }
 
@@ -115,14 +115,14 @@
 /* Dashboard styles */
 .dashboard-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: transparent;
     padding: 40px 20px;
 }
 
 .dashboard-content {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
+    background: transparent;
     border-radius: 10px;
     padding: 40px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
@@ -134,15 +134,16 @@
 }
 
 .dashboard-header h1 {
-    color: #333;
+    color: var(--color-text);
     margin-bottom: 10px;
 }
 
 .user-info {
-    background: #f7f7f7;
+    background: transparent;
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 30px;
+    color: var(--color-text);
 }
 
 .button-group {

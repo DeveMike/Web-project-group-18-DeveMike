@@ -7,7 +7,7 @@ div#review-search-container {
 }
 
 div#review-search-container h2 {
-  color: #FFD700;
+  color: var(--color-text);
 }
 
 div#search-to-review {

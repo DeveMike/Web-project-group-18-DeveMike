@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ThemeSwitcher from './ThemeSwitcher';
 import './Navbar.css'; // tyylit sitten joskus
 
 function Navbar() {
@@ -14,6 +15,9 @@ function Navbar() {
                 <li><Link to="/search">Haku</Link></li>
                 <li><Link to="/reviews">Arvostelut</Link></li>
             </ul>
+            <div className="navbar-right">
+                <ThemeSwitcher />
+            </div>
         </nav>
     );
 }

@@ -1,15 +1,165 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* App.css - Lisää nämä tyylit olemassa olevaan App.css tiedostoon */
+
+/* Varmista että kaikki teksti näkyy GoT-teemassa */
+[data-theme="got"] * {
+  color: #FFFFFF;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
-                 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 
-                 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+[data-theme="got"] h1,
+[data-theme="got"] h2,
+[data-theme="got"] h3,
+[data-theme="got"] h4,
+[data-theme="got"] h5,
+[data-theme="got"] h6 {
+  color: #FFFFFF;
+  font-family: 'Cinzel', serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="got"] p,
+[data-theme="got"] span,
+[data-theme="got"] div {
+  color: #E0E0E0;
+}
+
+[data-theme="got"] label {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* GoT kortit ja containerit */
+[data-theme="got"] .card,
+[data-theme="got"] [class*="card"],
+[data-theme="got"] [class*="Card"],
+[data-theme="got"] [class*="box"],
+[data-theme="got"] [class*="Box"],
+[data-theme="got"] [class*="container"],
+[data-theme="got"] [class*="Container"] {
+  background: rgba(10, 10, 10, 0.95) !important;
+  border: 1px solid rgba(74, 144, 226, 0.3) !important;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.1);
+}
+
+/* GoT input kentät */
+[data-theme="got"] input,
+[data-theme="got"] select,
+[data-theme="got"] textarea {
+  background: rgba(20, 20, 20, 0.95) !important;
+  color: #FFFFFF !important;
+  border: 1px solid #4A90E2 !important;
+  padding: 10px !important;
+  font-family: 'Crimson Text', serif;
+  font-size: 16px;
+}
+
+[data-theme="got"] input::placeholder,
+[data-theme="got"] textarea::placeholder {
+  color: #888888 !important;
+}
+
+[data-theme="got"] input:focus,
+[data-theme="got"] select:focus,
+[data-theme="got"] textarea:focus {
+  outline: none !important;
+  border-color: #5A9FE2 !important;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.3) !important;
+}
+
+/* GoT napit */
+[data-theme="got"] button,
+[data-theme="got"] [type="button"],
+[data-theme="got"] [type="submit"] {
+  background: linear-gradient(135deg, #4A90E2, #2C5AA0) !important;
+  color: #FFFFFF !important;
+  border: 1px solid #4A90E2 !important;
+  padding: 10px 20px !important;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+[data-theme="got"] button:hover,
+[data-theme="got"] [type="button"]:hover,
+[data-theme="got"] [type="submit"]:hover {
+  background: linear-gradient(135deg, #5A9FE2, #3C6AB0) !important;
+  box-shadow: 
+    0 4px 15px rgba(74, 144, 226, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+[data-theme="got"] button:active {
+  transform: translateY(0);
+}
+
+/* GoT linkit */
+[data-theme="got"] a {
+  color: #4A90E2 !important;
+}
+
+[data-theme="got"] a:hover {
+  color: #6AAFE2 !important;
+  text-decoration: underline;
+}
+
+/* Varmista sisällön näkyvyys keskellä */
+[data-theme="got"] main,
+[data-theme="got"] .app-main,
+[data-theme="got"] .content {
+  position: relative;
+  z-index: 20;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Ryhmät-sivun kortit */
+[data-theme="got"] .group-card,
+[data-theme="got"] [class*="group"] {
+  background: rgba(15, 15, 15, 0.95) !important;
+  border: 1px solid #4A90E2 !important;
+}
+
+/* Taulukot */
+[data-theme="got"] table {
+  background: rgba(10, 10, 10, 0.95) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="got"] th {
+  background: rgba(74, 144, 226, 0.2) !important;
+  color: #FFFFFF !important;
+  border-bottom: 2px solid #4A90E2 !important;
+}
+
+[data-theme="got"] td {
+  border-bottom: 1px solid rgba(74, 144, 226, 0.2) !important;
+  color: #E0E0E0 !important;
+}
+
+[data-theme="got"] tr:hover {
+  background: rgba(74, 144, 226, 0.1) !important;
+}
+
+/* Scrollbar tyylittely GoT-teemalle */
+[data-theme="got"] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="got"] ::-webkit-scrollbar-track {
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+[data-theme="got"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4A90E2, #2C5AA0);
+  border-radius: 6px;
+}
+
+[data-theme="got"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5A9FE2, #3C6AB0);
 }
