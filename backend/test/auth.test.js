@@ -60,4 +60,9 @@ describe('Auth API tests', function () {
     expect(data).to.have.property('deletedEmail')
     expect(data.deletedEmail).to.equal(email)
   })
+
+    it('should not login after account deletion', async function () {
+    const res = await fetch(apiUrl + 'login/', postOptions({ email, password }))
+    expect(res.status).to.equal(401)
+  })
 })
