@@ -34,4 +34,9 @@ describe('Auth API tests', function () {
     const data = await res.json()
     expect(data).to.have.property('token')
   })
+
+  it('should fail login with wrong password', async function () {
+    const res = await fetch(apiUrl + 'login/', postOptions({ email, password: 'Wrong123' }))
+    expect(res.status).to.equal(401)
+  })
 })
