@@ -27,4 +27,11 @@ describe('Auth API tests', function () {
     const res = await fetch(apiUrl + 'register/', postOptions({ email, password }))
     expect(res.status).to.equal(409)
   })
+
+  it('should login with correct credentials', async function () {
+    const res = await fetch(apiUrl + 'login/', postOptions({ email, password }))
+    expect(res.status).to.equal(200)
+    const data = await res.json()
+    expect(data).to.have.property('token')
+  })
 })
