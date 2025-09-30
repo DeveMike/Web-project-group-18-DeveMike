@@ -39,4 +39,14 @@ describe('Auth API tests', function () {
     const res = await fetch(apiUrl + 'login/', postOptions({ email, password: 'Wrong123' }))
     expect(res.status).to.equal(401)
   })
+
+  it('should logout successfully', async function () {
+    const res = await fetch(apiUrl + 'logout/', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token }
+    })
+    expect([200, 204]).to.include(res.status)
+    const data = await res.json()
+    expect(data).to.have.property('message')
+  })
 })
