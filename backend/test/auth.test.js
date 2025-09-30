@@ -49,4 +49,15 @@ describe('Auth API tests', function () {
     const data = await res.json()
     expect(data).to.have.property('message')
   })
+
+  it('should delete the account', async function () {
+    const res = await fetch(apiUrl + 'delete-account/', {
+      method: 'DELETE',
+      headers: { Authorization: 'Bearer ' + token }
+    })
+    expect([200, 204]).to.include(res.status)
+    const data = await res.json()
+    expect(data).to.have.property('deletedEmail')
+    expect(data.deletedEmail).to.equal(email)
+  })
 })
