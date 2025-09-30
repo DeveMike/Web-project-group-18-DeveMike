@@ -23,4 +23,8 @@ describe('Auth API tests', function () {
     token = data.token
   })
 
+  it('should fail to register with existing email', async function () {
+    const res = await fetch(apiUrl + 'register/', postOptions({ email, password }))
+    expect(res.status).to.equal(409)
+  })
 })
