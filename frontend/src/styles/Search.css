@@ -11,8 +11,8 @@
   flex-direction: column;
   min-width: 900px;
   width: 900px;
-  max-height: 80vh;    /* container ei veny ruutua isommaksi */
-  overflow-y: auto;    /* korttien skrollaus tapahtuu sisällä */
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 
@@ -94,6 +94,7 @@
 .result-card:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 16px rgba(245,197,24,0.6);
+  border: 2px solid #f5c518;
 }
 
 .result-card img {
