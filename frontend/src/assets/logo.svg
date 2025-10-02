@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160">
+  <!-- Leffa -->
+  <text x="10" y="115" font-family="Arial Black, sans-serif" font-size="100" font-weight="900" fill="#FFFFFF">
+    Leffa
+  </text>
+  
+  <!-- Keltainen tausta Hubille -->
+  <rect x="300" y="25" width="260" height="110" rx="20" ry="20" fill="#FFC107"/>
+  
+  <!-- Hub -->
+  <text x="325" y="115" font-family="Arial Black, sans-serif" font-size="100" font-weight="900" fill="#000000">
+    Hub
+  </text>
+</svg>
