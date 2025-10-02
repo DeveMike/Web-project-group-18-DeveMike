@@ -1,4 +1,4 @@
-const { expect } = require('chai')
+import { expect } from 'chai'
 
 describe('Auth API tests', function () {
   const apiUrl = 'http://localhost:3001/api/auth/'
