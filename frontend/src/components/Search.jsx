@@ -183,33 +183,35 @@ export default function Search() {
         </div>
       )}
 
-      <div className="results-grid">
-        {results.map((m) => (
-          <div key={m.id} className="result-card">
-            {m.poster_path ? (
-              <img
-                src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}
-                alt={m.title}
-              />
-            ) : (
-              <div className="poster-placeholder">Ei kuvaa</div>
-            )}
-            <h4>{m.title}</h4>
-            <p>
-              {m.release_date?.slice(0, 4) || "N/A"} •{" "}
-              {m.vote_average
-                ? m.vote_average.toFixed(1) + "/10"
-                : "Ei arvosanaa"}
-            </p>
-            {isLoggedIn && (
-              <button
-                className="favorite-btn"
-                onClick={() => handleAddFavorite(m)}>
-                ⭐ Lisää suosikkeihin
-              </button>
-            )}
-          </div>
-        ))}
+      <div className="results-container">
+        <div className="results-grid">
+          {results.map((m) => (
+            <div key={m.id} className="result-card">
+              {m.poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}
+                  alt={m.title}
+                />
+              ) : (
+                <div className="poster-placeholder">Ei kuvaa</div>
+              )}
+              <h4>{m.title}</h4>
+              <p>
+                {m.release_date?.slice(0, 4) || "N/A"} •{" "}
+                {m.vote_average
+                  ? m.vote_average.toFixed(1) + "/10"
+                  : "Ei arvosanaa"}
+              </p>
+              {isLoggedIn && (
+                <button
+                  className="favorite-btn"
+                  onClick={() => handleAddFavorite(m)}>
+                  ⭐ Lisää suosikkeihin
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
