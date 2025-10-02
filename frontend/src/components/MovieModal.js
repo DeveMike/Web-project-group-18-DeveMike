@@ -4,7 +4,7 @@ import '../styles/MovieModal.css';
 function MovieModal({ movie, areaId, onClose }) {
     const [details, setDetails] = useState(null);
     const [groupedShowtimes, setGroupedShowtimes] = useState({});
-    const [expanded, setExpanded] = useState(false); // uusi tila
+    const [expanded, setExpanded] = useState(false);
 
     useEffect(() => {
         if (!movie) return;
@@ -85,8 +85,8 @@ function MovieModal({ movie, areaId, onClose }) {
     const shortText = details?.synopsis?.slice(0, 300); // lyhyt versio
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="movie-modal-overlay" onClick={onClose}>
+            <div className="movie-modal-content" onClick={(e) => e.stopPropagation()}>
                 <button className="close-button" onClick={onClose}>×</button>
                 <div className="modal-layout">
                     <img src={movie.image} alt={movie.title} className="modal-poster" />

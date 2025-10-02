@@ -12,7 +12,7 @@ function MovieCard({ title, image, year, onClick }) {
         );
     };
     return (
-        <div className="movie-card" onClick={onClick} style={{ cursor: 'pointer' }}>
+        <div className="movie-card" onClick={onClick}>
             {image && <img src={image} alt={title} className="movie-poster" />}
             {(year) ? <WithYear /> : <h3>{title}</h3>}
         </div>

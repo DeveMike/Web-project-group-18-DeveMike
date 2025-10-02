@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MovieCard from '../components/MovieCard';
 import MovieModal from '../components/MovieModal';
+import FinnkinoLogo from '../assets/finnkino.png';
 import '../styles/Showtimes.css';
 
 function Showtimes() {
@@ -119,6 +120,9 @@ function Showtimes() {
 
     return (
         <div className="showtimes-container">
+            <div className="finnkino-banner">
+                <img src={FinnkinoLogo} alt="Finnkino logo" />
+            </div>
             <h2>Finnkinon näytökset</h2>
 
             <p style={{ fontSize: '0.9rem', color: '#999', marginBottom: '1rem' }}>

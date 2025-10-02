@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import authService from '../services/api';
 
 // Teemojen määrittelyt
 const themes = {
@@ -18,26 +19,6 @@ const themes = {
       body: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
     }
   },
-  got: {
-    name: 'Game of Thrones',
-    colors: {
-      primary: '#8B4513',
-      secondary: '#1a1a1a',
-      accent: '#FFD700',
-      background: '#0a0a0a',
-      surface: '#1a1a1a',
-      text: '#d4af37',
-      textLight: '#a08d5d'
-    },
-    fonts: {
-      heading: "'Cinzel', serif",
-      body: "'Crimson Text', serif"
-    },
-    special: {
-      backgroundImage: 'linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9))',
-      borderStyle: '2px solid #8B4513'
-    }
-  },
   hacker: {
     name: 'Hacker',
     colors: {
@@ -45,7 +26,7 @@ const themes = {
       secondary: '#00e676',
       accent: '#1aff9c',
       background: '#000000',
-      surface: '#0a0a0a',
+      surface: 'rgba(7, 12, 9, 0.85)',
       text: '#00ff6a',
       textLight: '#00e676'
     },
@@ -56,31 +37,63 @@ const themes = {
     special: {
       backgroundComponent: 'LetterGlitch'
     }
+  },
+  liquidEther: {
+    name: 'Liquid',
+    colors: {
+      primary: '#B19EEF',
+      secondary: '#5227FF',
+      accent: '#FF9FFC',
+      background: '#000000',
+      surface: '#1a1a1a',
+      text: '#FFFFFF',
+      textLight: '#E0E0E0'
+    },
+    fonts: {
+      heading: "'Courier New', Courier, monospace",
+      body: "'Courier New', Courier, monospace"
+    },
+    special: {
+      backgroundComponent: 'LiquidEther'
+    }
   }
-  };
+};
 
 // Context luonti
 const ThemeContext = createContext();
 
 // Theme Provider komponentti
 export const ThemeProvider = ({ children }) => {
-  // Haetaan tallennettu teema localStoragesta
-  const [currentTheme, setCurrentTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('userTheme');
-    return themes[savedTheme] ? savedTheme : 'default';
-  });
+  const [currentTheme, setCurrentTheme] = useState('default');
+
+  useEffect(() => {
+    const user = authService.getCurrentUser();
+    const initialTheme = user?.theme || localStorage.getItem('anonymousTheme') || 'default';
+    if (themes[initialTheme]) {
+      setCurrentTheme(initialTheme);
+    }
+  }, []);
 
   // Teeman vaihto funktio
   const changeTheme = (themeName) => {
     if (themes[themeName]) {
       setCurrentTheme(themeName);
-      localStorage.setItem('userTheme', themeName);
+      if (authService.isAuthenticated()) {
+        authService.updateTheme(themeName).catch(error => {
+          console.error("Failed to update theme:", error);
+          // Optionally revert theme change on UI if API call fails
+        });
+      } else {
+        localStorage.setItem('anonymousTheme', themeName);
+      }
     }
   };
 
   // Päivitä CSS-muuttujat kun teema vaihtuu
   useEffect(() => {
     const theme = themes[currentTheme];
+    if (!theme) return; // Varmistus, jos teemaa ei löydy
+
     const root = document.documentElement;
     
     // Aseta värit
@@ -92,6 +105,16 @@ export const ThemeProvider = ({ children }) => {
     Object.entries(theme.fonts).forEach(([key, value]) => {
       root.style.setProperty(`--font-${key}`, value);
     });
+
+    // Aseta special-ominaisuudet
+    if (theme.special) {
+      Object.entries(theme.special).forEach(([key, value]) => {
+        root.style.setProperty(`--special-${key}`, value);
+      });
+    } else {
+      // Puhdista vanhat special-ominaisuudet, jos vaihdetaan teemaan, jolla ei niitä ole
+      // Esimerkki: poista --special-background-image
+    }
     
     // Lisää teema-attribuutti body-elementtiin
     document.body.setAttribute('data-theme', currentTheme);

@@ -1,180 +1,222 @@
 .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: transparent;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: calc(100vh - 60px); 
+  background-color: #121212; 
+  padding: 10px 20px 20px;         
+  padding-top: 40px;
+
+  background-image: url('../assets/movie-background-collage.jpg');
+  background-size: cover;       
+  background-position: center;  
+  background-repeat: no-repeat; 
 }
 
 .auth-form {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+  background-color: #1e1e1e;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  margin-top: 20px;
+  max-width: 400px;
+  color: #fff;
 }
 
 .auth-form h2 {
-    margin-bottom: 30px;
-    text-align: center;
-    color: #333;
-    font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #FFD700; 
+  font-size: 28px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-    font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  color: #FFD700;
+  font-weight: bold;
 }
 
 .form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  background-color: #2c2c2c;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
-    outline: none;
-    border-color: #667eea;
+  outline: none;
+  border-color: #FFD700;
 }
 
 .error-message {
-    background: #fee;
-    color: #c33;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
-
-.error-details {
-    list-style: none;
-    padding: 0;
-    margin: 5px 0 0 0;
-}
-
-.error-details li {
-    margin: 5px 0;
+  background: #330000;
+  color: #ff6666;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .success-message {
-    background: #efe;
-    color: #3a3;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+  background: #003300;
+  color: #66ff66;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .btn {
-    width: 100%;
-    padding: 12px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
+  width: 100%;
+  padding: 12px;
+  background: #FFD700;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .btn:hover {
-    background: #5a67d8;
+  background: #e6c200;
 }
 
 .btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
 }
 
 .auth-links {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .auth-links a {
-    color: #667eea;
-    text-decoration: none;
+  color: #FFD700;
+  text-decoration: none;
 }
 
 .auth-links a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Dashboard styles */
 .dashboard-container {
-    min-height: 100vh;
-    background-color: transparent;
-    padding: 40px 20px;
+  min-height: 100vh;
+  background-image: url('../assets/movie-background-collage2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px 20px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .dashboard-content {
-    max-width: 800px;
-    margin: 0 auto;
-    background: transparent;
-    border-radius: 10px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  color: #fff;
 }
 
 .dashboard-header {
-    text-align: center;
-    margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .dashboard-header h1 {
-    color: var(--color-text);
-    margin-bottom: 10px;
+  color: #FFD700;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.dashboard-header p {
+  font-size: 16px;
+  color: #ccc;
 }
 
 .user-info {
-    background: transparent;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 30px;
-    color: var(--color-text);
+  background: #2c2c2c;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.user-info h3 {
+  color: #FFD700;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.settings-box {
+  background: #2c2c2c;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+.settings-box h3 {
+  color: #FFD700;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 1rem;
 }
 
 .button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-.btn-secondary {
-    background: #6c757d;
+.btn {
+  padding: 10px 16px;
+  background-color: #FFD700;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.btn-secondary:hover {
-    background: #5a6268;
+.btn:hover {
+  background-color: #e6c200;
 }
 
-.btn-danger {
-    background: #dc3545;
-}
 
-.btn-danger:hover {
-    background: #c82333;
-}
 
 /* Responsive */
 @media (max-width: 480px) {
-    .auth-form {
-        padding: 30px 20px;
-    }
-    
-    .button-group {
-        flex-direction: column;
-    }
+  .auth-form {
+    padding: 30px 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
 }

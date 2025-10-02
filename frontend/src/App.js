@@ -15,16 +15,18 @@ import Reviews from './pages/reviews/Reviews';
 import SearchFilmToReview from './pages/reviews/SearchFilmToReview';
 import WriteReview from './pages/reviews/WriteReview';
 import Review from './pages/reviews/SingleReview';
+import Favorites from './pages/Favorites';
+import FavoritesShared from "./pages/FavoritesShared";
+
 import './App.css';
 import './styles/theme-styles.css';
 
 function App() {
     return (
         <ThemeProvider>
+            <ThemeBackground />
             <Router>
                 <Navbar />
-                <ThemeBackground />
-
                 <Routes>
                     <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<Login />} />
@@ -36,14 +38,23 @@ function App() {
                     <Route path="/reviews/write" element={<SearchFilmToReview />} />
                     <Route path="/reviews/write/:id" element={<WriteReview />} />
                     <Route path="/reviews/:id" element={<Review />} />
-                    <Route 
-                        path="/dashboard" 
+                    <Route
+                        path="/dashboard"
                         element={
                             <ProtectedRoute>
                                 <Dashboard />
                             </ProtectedRoute>
-                        } 
+                        }
                     />
+                    <Route
+                        path="/favorites"
+                        element={
+                            <ProtectedRoute>
+                                <Favorites />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route path="/favorites/shared/:shareId" element={<FavoritesShared />} />
                 </Routes>
             </Router>
         </ThemeProvider>
