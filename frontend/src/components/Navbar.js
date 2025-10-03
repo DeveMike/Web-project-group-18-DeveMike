@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import './Navbar.css'; // tyylit sitten joskus
 
 function Navbar() {
@@ -17,6 +18,7 @@ function Navbar() {
                 <li><Link to="/favorites">Suosikit</Link></li>
                 
             </ul>
+
         </nav>
     );
 }

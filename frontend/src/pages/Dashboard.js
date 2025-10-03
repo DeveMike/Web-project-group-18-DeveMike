@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authService from '../services/api';
+import ThemeSwitcher from '../components/ThemeSwitcher'; // Tuo ThemeSwitcher
 import '../styles/Auth.css';
 
 function Dashboard() {
@@ -40,6 +41,11 @@ function Dashboard() {
                     <p><strong>Sähköposti:</strong> {user.email}</p>
                     <p><strong>Käyttäjä ID:</strong> {user.id}</p>
                     <p><strong>Rekisteröitynyt:</strong> {new Date(user.createdAt).toLocaleDateString('fi-FI')}</p>
+                </div>
+
+                <div className="settings-box"> 
+                    <h3>Asetukset</h3>
+                    <ThemeSwitcher />
                 </div>
 
                 <div className="button-group">

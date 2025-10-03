@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import authService from '../services/api';
+import { useTheme } from '../contexts/ThemeContext'; // Tuo useTheme
 import '../styles/Auth.css';
 
 function Login() {
     const navigate = useNavigate();
+    const { changeTheme } = useTheme(); // Hae changeTheme contextista
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -25,7 +27,11 @@ function Login() {
         setLoading(true);
 
         try {
-            await authService.login(formData.email, formData.password);
+            const loginData = await authService.login(formData.email, formData.password);
+            // Vaihda teema heti kirjautumisen jälkeen
+            if (loginData.user && loginData.user.theme) {
+                changeTheme(loginData.user.theme);
+            }
             navigate('/dashboard');
         } catch (error) {
             setError(error.error || 'Kirjautuminen epäonnistui');

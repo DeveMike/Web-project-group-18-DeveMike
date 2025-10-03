@@ -6,7 +6,7 @@ div#single-review-container {
 }
 
 h2.page-name {
-  color: #ffd900;
+  color: var(--color-text);
 }
 
 div#single-review-container div.movie-card {
@@ -50,7 +50,7 @@ div#single-review-container div.review {
 }
 
 div.review h4 {
-  color: #ffea70;
+  color: var(--color-text);
 }
 
 div#single-review-container div.review h4 {
@@ -61,7 +61,7 @@ div#single-review-container div.review h4 {
 
 div#single-review-container p {
   white-space: pre-line;
-  background-color: #444;
+  background-color: var(--color-surface);
   padding: 1rem;
   border-radius: 0.6rem;
   flex: 1 1 0px;

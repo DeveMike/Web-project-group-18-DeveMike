@@ -12,6 +12,13 @@ const Reviews = () => {
   const reviewsFetched = useRef(false)
 
   useEffect(() => {
+    document.body.classList.add('reviews-page');
+    return () => {
+      document.body.classList.remove('reviews-page');
+    };
+  }, []);
+
+  useEffect(() => {
     const apiUrl = "http://localhost:3001/api/"
 
     setLoggedIn(authService.isAuthenticated)

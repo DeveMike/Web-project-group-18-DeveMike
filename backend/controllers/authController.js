@@ -91,7 +91,7 @@ const login = async (req, res) => {
         }
 
         const user = await pool.query(
-            'SELECT user_id, email, password_hash, created_at FROM users WHERE email = $1;',
+            'SELECT user_id, email, password_hash, theme, created_at FROM users WHERE email = $1;',
             [email]
         );
 
@@ -115,7 +115,8 @@ const login = async (req, res) => {
         const token = jwt.sign(
             { 
                 userId: user.rows[0].user_id, 
-                email: user.rows[0].email 
+                email: user.rows[0].email,
+                theme: user.rows[0].theme
             },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRE }
@@ -126,6 +127,7 @@ const login = async (req, res) => {
             user: {
                 id: user.rows[0].user_id,
                 email: user.rows[0].email,
+                theme: user.rows[0].theme,
                 createdAt: user.rows[0].created_at 
             },
             token
@@ -170,8 +172,44 @@ const deleteAccount = async (req, res) => {
     }
 };
 
+// ============================================
+// FUNKTIO 4: TEEMAN PÄIVITYS
+// ============================================
+const updateTheme = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { theme } = req.body;
+
+        if (!theme) {
+            return res.status(400).json({ error: 'Teema vaaditaan' });
+        }
+
+        const result = await pool.query(
+            'UPDATE users SET theme = $1, updated_at = now() WHERE user_id = $2 RETURNING user_id, theme;',
+            [theme, userId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Käyttäjää ei löytynyt' });
+        }
+
+        res.status(200).json({
+            message: 'Teema päivitetty onnistuneesti',
+            user: {
+                id: result.rows[0].user_id,
+                theme: result.rows[0].theme
+            }
+        });
+
+    } catch (error) {
+        console.error('Teeman päivitysvirhe:', error);
+        res.status(500).json({ error: 'Palvelinvirhe teeman päivityksessä' });
+    }
+};
+
 module.exports = {
     register,
     login,
-    deleteAccount
+    deleteAccount,
+    updateTheme
 };
