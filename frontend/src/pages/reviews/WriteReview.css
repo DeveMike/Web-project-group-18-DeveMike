@@ -7,6 +7,7 @@ div.container {
 
 h2.page-name {
   margin: 1rem;
+  color: var(--color-text);
 }
 
 div#review-view {
@@ -67,7 +68,7 @@ div.error-rating-post {
 }
 
 div.error-rating-post h3 {
-  color: #f00;
+  color: var(--color-accent);
 }
 
 div.rating {

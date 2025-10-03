@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import './Navbar.css'; // tyylit sitten joskus
 import logo from '../assets/logo.svg';
 
@@ -20,6 +21,7 @@ function Navbar() {
                 <li><Link to="/dashboard">Oma sivu</Link></li>
 
             </ul>
+
         </nav>
     );
 }

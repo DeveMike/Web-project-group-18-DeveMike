@@ -202,13 +202,13 @@ export default function GroupsHub() {
 
   /* -------------------- UI helpers -------------------- */
   const Pill = ({ children }) => (
-    <span style={{ padding: "2px 8px", borderRadius: 999, fontSize: 12, background: "#eee" }}>
+    <span style={{ padding: "2px 8px", borderRadius: 999, fontSize: 12, background: "var(--color-surface)" }}>
       {children}
     </span>
   );
 
   const Panel = ({ title, children, footer }) => (
-    <div style={{ background: "#f2f2f2", padding: 16, borderRadius: 8 }}>
+    <div style={{ background: "var(--color-surface)", padding: 16, borderRadius: 8 }}>
       {title && <div style={{ fontWeight: 700, marginBottom: 8 }}>{title}</div>}
       {children}
       {footer}
@@ -252,9 +252,8 @@ export default function GroupsHub() {
               padding: "6px 10px",
               borderRadius: 6,
               marginTop: 8,
-              background:
-                message.type === "ok" ? "#e3f8e5" : message.type === "err" ? "#fde8e8" : "#eef2ff",
-              color: "#222",
+              background: "var(--color-surface)",
+              color: "var(--color-text)",
               fontSize: 14,
             }}
           >
@@ -276,9 +275,9 @@ export default function GroupsHub() {
                 style={{
                   padding: "8px 10px",
                   borderRadius: 8,
-                  border: "1px solid #ddd",
-                  background: selectedId === g.group_id ? "#111" : "white",
-                  color: selectedId === g.group_id ? "white" : "#111",
+                  border: "1px solid var(--color-primary)",
+                  background: selectedId === g.group_id ? "var(--color-primary)" : "var(--color-surface)",
+                  color: selectedId === g.group_id ? "var(--color-surface)" : "var(--color-text)",
                   cursor: "pointer",
                 }}
                 title={g.role === "owner" ? "Omistaja" : "Jäsen"}
@@ -297,7 +296,7 @@ export default function GroupsHub() {
               value={allSearch}
               onChange={(e) => setAllSearch(e.target.value)}
               autoComplete="off"
-              style={{ flex: 1, padding: "8px 10px", borderRadius: 6, border: "1px solid #ddd" }}
+              style={{ flex: 1, padding: "8px 10px", borderRadius: 6, border: "1px solid var(--color-primary)" }}
             />
           </div>
           {loading && !allGroups.length && <div>Ladataan…</div>}
@@ -309,8 +308,8 @@ export default function GroupsHub() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  background: "white",
-                  border: "1px solid #e6e6e6",
+                  background: "var(--color-surface)",
+                  border: "1px solid var(--color-primary)",
                   borderRadius: 8,
                   padding: "8px 12px",
                 }}
@@ -378,8 +377,8 @@ export default function GroupsHub() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      background: "white",
-                      border: "1px solid #e6e6e6",
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-primary)",
                       borderRadius: 8,
                       padding: "6px 8px",
                     }}
@@ -471,9 +470,8 @@ export default function GroupsHub() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    background: "white",
-                    border: "1px solid #e6e6e6",
-                    borderRadius: 8,
+                                      background: "var(--color-surface)",
+                                      border: "1px solid var(--color-primary)",                    borderRadius: 8,
                     padding: "8px 10px",
                   }}
                 >
