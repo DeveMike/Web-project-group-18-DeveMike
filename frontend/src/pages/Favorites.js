@@ -90,13 +90,14 @@ export default function Favorites() {
 
   //Lista
   return (
-    <div className="favorites-container">
+  <div className="favorites-container">
+    <div className="favorites-top">
       <h1>Suosikkilistat</h1>
 
       <form
         className="create-list-container"
         onSubmit={(e) => {
-          e.preventDefault(); // estää sivun refreshin
+          e.preventDefault();
           handleCreate();
         }}
       >
@@ -124,17 +125,14 @@ export default function Favorites() {
                 try {
                   const res = await api.post(`/favorites/${l.list_id}/share`);
                   const data = res.data;
-                  if (data.share_url) {
-                    setShareUrl(data.share_url);
-                  } else {
-                    throw new Error("Virheellinen vastaus");
-                  }
-                } catch (e) {
-                  console.error("Jakaminen epäonnistui:", e);
+                  if (data.share_url) setShareUrl(data.share_url);
+                } catch {
                   alert("Listan jakaminen epäonnistui.");
                 }
               }}
-            >🔗 Jaa</button>
+            >
+              🔗 Jaa
+            </button>
             <button
               className="delete-list-button"
               onClick={() => handleDeleteList(l.list_id)}
@@ -145,13 +143,15 @@ export default function Favorites() {
           </div>
         ))}
       </div>
+    </div>
 
+    <div className="favorites-results">
+      {activeListMovies.length === 0 && (
+        <div className="empty-placeholder">
+          Tämä lista on tyhjä. Lisää elokuvia haun kautta ⭐
+        </div>
+      )}
       <div className="movies-grid">
-        {activeListMovies.length === 0 && (
-          <div className="empty-placeholder">
-            Tämä lista on tyhjä. Lisää elokuvia haun kautta ⭐
-          </div>
-        )}
         {activeListMovies.map((m) => (
           <div key={m.movie_id} className="movie-card">
             {m.poster_url ? (
@@ -169,7 +169,9 @@ export default function Favorites() {
           </div>
         ))}
       </div>
-      {shareUrl && <ShareModal url={shareUrl} onClose={() => setShareUrl(null)} />}
     </div>
-  );
+
+    {shareUrl && <ShareModal url={shareUrl} onClose={() => setShareUrl(null)} />}
+  </div>
+);
 }

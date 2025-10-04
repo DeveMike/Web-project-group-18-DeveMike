@@ -9,6 +9,10 @@
   min-height: 500px;
   display: flex;
   flex-direction: column;
+  min-width: 900px;
+  width: 900px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 
@@ -68,6 +72,13 @@
   flex: 1;
 }
 
+.results-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  max-height: calc(100vh - 150px); 
+}
+
 .result-card {
   background: #1c1c1c;
   border-radius: 8px;
@@ -83,6 +94,7 @@
 .result-card:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 16px rgba(245,197,24,0.6);
+  border: 2px solid #f5c518;
 }
 
 .result-card img {
