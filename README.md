@@ -45,10 +45,10 @@ The app consists of a **Node.js/Express** backend (REST API, MySQL/MariaDB) and 
 
 Monorepo with separate frontend and backend:
 
-- `frontend/` — static pages + JS that consumes the REST API
-- `backend/` — Express server: authentication, movies, users, favorites
-- `elokuvasovellus.sql` — database schema (tables, relations, optional seed)
-- `Tietokanta.png` — database diagram (embedded above)
+- `frontend/` – static pages + JS that consumes the REST API
+- `backend/` – Express server: authentication, movies, users, favorites
+- `elokuvasovellus.sql` – database schema (tables, relations, optional seed)
+- `Tietokanta.png` – database diagram (embedded above)
 
 ---
 
@@ -78,11 +78,17 @@ cd frontend
 npm install
 # (if needed) cp .env.example .env
 cd ..
+```
+
+---
 
 ## Environment Variables
 
-# Backend
+### Backend
 
+Create a `.env` file in the `backend/` directory:
+
+```env
 # Server
 PORT=3000
 
@@ -96,84 +102,101 @@ DATABASE_PASSWORD=CHANGE_ME
 # Auth
 JWT_SECRET=please-use-a-long-random-secret
 JWT_EXPIRES_IN=7d
+```
 
-# Frontend
+### Frontend
 
-REACT_APP_TMDB_KEY = yourAPIkey
+Create a `.env` file in the `frontend/` directory:
+
+```env
+REACT_APP_TMDB_KEY=yourAPIkey
+```
+
+---
 
 ## Database
 
-# MySQL CLI
+Setup the database using MySQL CLI:
+
+```bash
 mysql -u root -p < elokuvasovellus.sql
+```
+
 ![Database Diagram](./Tietokanta.png)
+
+---
 
 ## API
 
-# Typical routes
+### Typical Routes
 
-Auth
+#### Auth
 
-POST /api/auth/register — create user
+- `POST /api/auth/register` – create user
+- `POST /api/auth/login` – login, returns JWT
+- `GET /api/auth/me` – current user (Authorization: Bearer)
 
-POST /api/auth/login — login, returns JWT
+#### Movies
 
-GET /api/auth/me — current user (Authorization: Bearer)
+- `GET /api/movies` – list; query params: search, genre, year, sort, page, limit
+- `GET /api/movies/:id` – single movie
+- `POST /api/movies` – create (admin)
+- `PUT /api/movies/:id` – update (admin)
+- `DELETE /api/movies/:id` – delete (admin)
 
-Movies
+#### Favorites
 
-GET /api/movies — list; query params: search, genre, year, sort, page, limit
+- `GET /api/users/:userId/favorites`
+- `POST /api/users/:userId/favorites` – body: `{ "movieId": <id> }`
+- `DELETE /api/users/:userId/favorites/:movieId`
 
-GET /api/movies/:id — single movie
+**Full API Documentation:** [Postman Documenter – Movie-App](https://documenter.getpostman.com/view/40272026/2sB3QJMq2g)
 
-POST /api/movies — create (admin)
-
-PUT /api/movies/:id — update (admin)
-
-DELETE /api/movies/:id — delete (admin)
-
-Favorites
-
-GET /api/users/:userId/favorites
-
-POST /api/users/:userId/favorites — body: { "movieId": <id> }
-
-DELETE /api/users/:userId/favorites/:movieId
-
-- **API Docs:** [Postman Documenter – Movie-App](https://documenter.getpostman.com/view/40272026/2sB3QJMq2g)
+---
 
 ## Dev Scripts
 
-# Backend
+### Backend
 
-npm run dev — dev server (nodemon)
-npm run start — production
-npm run lint — lint
-npm test — tests
+```bash
+npm run dev      # dev server (nodemon)
+npm run start    # production
+npm run lint     # lint
+npm test         # tests
+```
 
-# Frontend
+### Frontend
 
-npm run dev — dev server + HMR
-npm run build — production build to dist/
-npm run preview — preview production build
+```bash
+npm run dev      # dev server + HMR
+npm run build    # production build to dist/
+npm run preview  # preview production build
+```
+
+---
 
 ## Project Structure
 
+```
 film_website/
-├─ backend/              # Express: routes, controllers, services, db
-│  ├─ src/
-│  ├─ package.json
-│  └─ .env.example
-├─ frontend/             # HTML/CSS/JS + API calls
-│  ├─ src/
-│  ├─ package.json
-│  └─ .env.example
-├─ elokuvasovellus.sql
-├─ Tietokanta.png
-└─ README.md
+├── backend/              # Express: routes, controllers, services, db
+│   ├── src/
+│   ├── package.json
+│   └── .env.example
+├── frontend/             # HTML/CSS/JS + API calls
+│   ├── src/
+│   ├── package.json
+│   └── .env.example
+├── elokuvasovellus.sql
+├── Tietokanta.png
+└── README.md
+```
+
+---
 
 ## Team
 
-Aleksi
-Niko
-Mikhail
-Thomas
+- Aleksi
+- Niko
+- Mikhail
+- Thomas
