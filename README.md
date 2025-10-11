@@ -6,8 +6,6 @@ The app consists of a **Node.js/Express** backend (REST API, MySQL/MariaDB) and 
 - **Repo:** [Web-project-group-18/film_website](https://github.com/Web-project-group-18/film_website)
 - **API Docs:** [Postman Documenter – Movie-App](https://documenter.getpostman.com/view/40272026/2sB3QJMq2g)
 
-![Database Diagram](./Tietokanta.png)
-
 ---
 
 ## Table of Contents
