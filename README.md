@@ -20,13 +20,8 @@ The app consists of a **Node.js/Express** backend (REST API, MySQL/MariaDB) and 
 - [Database](#database)
 - [API](#api)
 - [Dev Scripts](#dev-scripts)
-
 - [Project Structure](#project-structure)
-- [Testing & Quality](#testing--quality)
-- [Security & Access Control](#security--access-control)
-- [Deployment](#deployment)
 - [Team](#team)
-- [License](#license)
 
 ---
 
