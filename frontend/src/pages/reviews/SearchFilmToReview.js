@@ -23,7 +23,7 @@ const SearchFilmToReview = () => {
     }
     const result = await response.json()
     // const firstFewMovies =  result.results.slice(0, 5)
-    setImgBaseUrl(result.img_base_url + "w185")
+    setImgBaseUrl(result.img_base_url)
     setMovies(result.results)
   }
 
