@@ -37,7 +37,7 @@ export default function GroupsHub() {
 
   // elokuvat & näytösajat
   const apiUrl = 'http://localhost:3001/api/groups/'
-  const loadedId = useRef(-1)
+  const moviesLoadedId = useRef(-1)
 
   // elokuvat
   const [showMovies, setShowMovies] = useState(false)
@@ -58,12 +58,12 @@ export default function GroupsHub() {
       console.log(result)
       setMoviesCallback(result)
     }
-    if((!moviesLoading.current || loadedId.current !== selectedId) && showMovies) {
+    if((!moviesLoading.current || moviesLoadedId.current !== selectedId) && showMovies) {
       moviesLoading.current = true
-      loadedId.current = selectedId
+      moviesLoadedId.current = selectedId
       fetchMovies(setMovies)
     }
-  }, [moviesLoading, showMovies, movies, setMovies,  loadedId, selectedId])
+  }, [moviesLoading, showMovies, movies, setMovies,  moviesLoadedId, selectedId])
 
   const toggleMovies = () => {
     if(showMovies) {
@@ -93,12 +93,12 @@ export default function GroupsHub() {
       console.log(result)
       setShowtimesCallback(result)
     }
-    if((!showtimesLoading.current || loadedId.current !== selectedId) && showShowtimes) {
+    if((!showtimesLoading.current || showtimesLoadedId.current !== selectedId) && showShowtimes) {
       showtimesLoading.current = true
-      loadedId.current = selectedId
+      showtimesLoadedId.current = selectedId
       fetchShowtimes(setShowtimes)
     }
-  }, [showtimesLoading, showShowtimes, showtimes, setShowtimes,  loadedId, selectedId])
+  }, [showtimesLoading, showShowtimes, showtimes, setShowtimes,  showtimesLoadedId, selectedId])
 
   const toggleShowtimes = () => {
     if(showShowtimes) {
@@ -595,27 +595,26 @@ export default function GroupsHub() {
           </Panel>
         </div>
       )}
-      <Panel title="Ryhmän elokuvat">
-        <button id="show-group-movies" onClick={toggleMovies}>
-          {(showMovies) ? "Piilota elokuvat" : "Näytä elokuvat"}
-        </button>
-        {showMovies && movies.length > 0 && (
-          <div>
-            <div style={{ display: "grid", gap: 8 }}>
+
+      <div id="group-content" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
+        <Panel title="Ryhmän elokuvat">
+          <button id="show-group-movies" onClick={toggleMovies}>
+            {(showMovies) ? "Piilota elokuvat" : "Näytä elokuvat"}
+          </button>
+          {showMovies && movies.length > 0 && (
+            <div id="group-movies" style={{ display: "grid", gap: 8 }}>
               {movies.map((m) => (
                 <MovieCard title={m.title} image={m.poster_url} year={m.release_year} />
               ))}
             </div>
-          </div>
-        )}
-      </Panel>
-      <Panel title="Ryhmän näytösajat">
-        <button id="show-group-showtimes" onClick={toggleShowtimes}>
-          {(showShowtimes) ? "Piilota näytösajat" : "Näytä näytösajat"}
-        </button>
-        {showShowtimes && showtimes.length > 0 && (
-          <div>
-            <div style={{ display: "grid", gap: 8 }}>
+          )}
+        </Panel>
+        <Panel title="Ryhmän näytösajat">
+          <button id="show-group-showtimes" onClick={toggleShowtimes}>
+            {(showShowtimes) ? "Piilota näytösajat" : "Näytä näytösajat"}
+          </button>
+          {showShowtimes && showtimes.length > 0 && (
+            <div id="group-showtimes" style={{ display: "grid", gap: 8 }}>
               {showtimes.map((st) => (
                 <div className="group-showtime">
                   <img src={st.image_url} />
@@ -632,9 +631,9 @@ export default function GroupsHub() {
                 </div>
               ))}
             </div>
-          </div>
-        )}
-      </Panel>
+          )}
+        </Panel>
+      </div>
     </div>
   );
 }
