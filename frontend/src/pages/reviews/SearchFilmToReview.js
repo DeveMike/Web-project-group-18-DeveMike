@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './SearchFilmToReview.css'
 import MovieCard from '../../components/MovieCard.js'
-import axios from 'axios' // Import axios
 
 const SearchFilmToReview = () => {
   const navigate = useNavigate()
@@ -41,7 +40,7 @@ const SearchFilmToReview = () => {
           <button type="submit">Hae</button>
         </form>
         <div id="review-search-list">
-          {searched && movies.length === 0 && <p>Ei hakutuloksia.</p>}
+          {movies.length === 0 && <p>Ei hakutuloksia.</p>}
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}

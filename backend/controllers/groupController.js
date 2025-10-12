@@ -299,7 +299,6 @@ const getGroupShowtimes = async (req, res, next) => {
         +' ORDER BY showtime;',
         [groupId]
       )
-      console.log(select.rows)
       return res.status(200).json(select.rows)
     }
   } catch(e) {
