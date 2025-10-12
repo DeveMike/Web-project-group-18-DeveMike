@@ -35,12 +35,15 @@ export default function GroupsHub() {
 
   const role = useMemo(() => (group ? group._userRole : null), [group]);
 
-  // elokuvat
+  // elokuvat & näytösajat
   const apiUrl = 'http://localhost:3001/api/groups/'
+  const loadedId = useRef(-1)
+
+  // elokuvat
   const [showMovies, setShowMovies] = useState(false)
   const [movies, setMovies] = useState([])
   const moviesLoading = useRef(false)
-  const loadedId = useRef(-1)
+  
 
   useEffect(() => {
     const fetchMovies = async (setMoviesCallback) => {
@@ -68,6 +71,41 @@ export default function GroupsHub() {
       moviesLoading.current = false
     } else {
       setShowMovies(true)
+    }
+  }
+
+  // näytösajat
+  const [showShowtimes, setShowShowtimes] = useState(false)
+  const [showtimes, setShowtimes] = useState([])
+  const showtimesLoading = useRef(false)
+  const showtimesLoadedId = useRef(-1)
+
+  useEffect(() => {
+    const fetchShowtimes = async (setShowtimesCallback) => {
+      const response = await fetch(apiUrl+selectedId+'/showtimes', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer "+localStorage.getItem('token')
+        }
+      })
+      const result = await response.json()
+      console.log(result)
+      setShowtimesCallback(result)
+    }
+    if((!showtimesLoading.current || loadedId.current !== selectedId) && showShowtimes) {
+      showtimesLoading.current = true
+      loadedId.current = selectedId
+      fetchShowtimes(setShowtimes)
+    }
+  }, [showtimesLoading, showShowtimes, showtimes, setShowtimes,  loadedId, selectedId])
+
+  const toggleShowtimes = () => {
+    if(showShowtimes) {
+      setShowShowtimes(false)
+      showtimesLoading.current = false
+    } else {
+      setShowShowtimes(true)
     }
   }
 
@@ -566,6 +604,32 @@ export default function GroupsHub() {
             <div style={{ display: "grid", gap: 8 }}>
               {movies.map((m) => (
                 <MovieCard title={m.title} image={m.poster_url} year={m.release_year} />
+              ))}
+            </div>
+          </div>
+        )}
+      </Panel>
+      <Panel title="Ryhmän näytösajat">
+        <button id="show-group-showtimes" onClick={toggleShowtimes}>
+          {(showShowtimes) ? "Piilota näytösajat" : "Näytä näytösajat"}
+        </button>
+        {showShowtimes && showtimes.length > 0 && (
+          <div>
+            <div style={{ display: "grid", gap: 8 }}>
+              {showtimes.map((st) => (
+                <div className="group-showtime">
+                  <img src={st.image_url} />
+                  <h3>{st.movie_title}</h3>
+                  <p>{new Date(st.showtime).toLocaleDateString('fi-FI', {
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      weekday: 'long',
+                      day: 'numeric',
+                      month: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </p>
+                </div>
               ))}
             </div>
           </div>

@@ -119,7 +119,6 @@ const addMovieToGroup = async (req, res, next) => {
 }
 
 const addShowtimeToGroup = async (req, res, next) => {
-  console.log(req.body.showtime)
   if(!req.body) {
     return res.status(400).json({ error: 'ei bodya'})
   } else {
@@ -128,7 +127,7 @@ const addShowtimeToGroup = async (req, res, next) => {
     const title = st.title
     const datetime = st.datetime
     const imageUrl = st.imageUrl
-    if(!cinemaName || !title || !datetime || imageUrl) {
+    if(!cinemaName || !title || !datetime || !imageUrl) {
       return res.status(400).json({ error: 'bodysta puuttuu jotakin'})
     } else {
       try {
@@ -281,6 +280,26 @@ const getGroupMovies = async (req, res, next) => {
         +' WHERE group_id=$1;',
         [groupId]
       )
+      return res.status(200).json(select.rows)
+    }
+  } catch(e) {
+    return next(e)
+  }
+}
+
+const getGroupShowtimes = async (req, res, next) => {
+  try {
+    const groupIdArray = await selectMatchingGroup(req.userId, req.params.id)
+    if(groupIdArray.length === 0) {
+      return res.status(403).json({ error: 'Et kuulu tähän ryhmään'})
+    } else {
+      const groupId = groupIdArray[0].group_id
+      const select = await pool.query('SELECT * FROM group_showtimes'
+        +' WHERE group_id=$1'
+        +' ORDER BY showtime;',
+        [groupId]
+      )
+      console.log(select.rows)
       return res.status(200).json(select.rows)
     }
   } catch(e) {
@@ -582,7 +601,8 @@ module.exports = {
   leaveGroup,
   addMovieToGroup,
   getGroupMovies,
-  addShowtimeToGroup
+  addShowtimeToGroup,
+  getGroupShowtimes
 };
 
 
