@@ -192,3 +192,104 @@
   gap: 8px;
   margin-bottom: 8px;
 }
+
+@media (max-width: 1024px) {
+  html, body {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .favorites-container {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+    padding: 1rem;
+    margin: 20px auto;
+    box-sizing: border-box;
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .favorites-container h1 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .create-list-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .create-list-container input,
+  .create-list-container button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .lists-container {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .list-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .favorites-results {
+    padding: 0.5rem;
+    overflow-y: visible;
+  }
+
+  .movies-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .movie-card {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .movie-poster {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  .movie-title {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+
+  .movie-details {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .remove-movie-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .empty-placeholder {
+    font-size: 1rem;
+    padding: 2rem;
+  }
+
+  .list-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

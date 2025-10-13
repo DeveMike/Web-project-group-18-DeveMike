@@ -189,3 +189,90 @@
   background: #333;
   color: #f5c518;
 }
+
+@media (max-width: 768px) {
+  .search-container {
+    width: 100%;
+    min-width: unset;
+    max-width: 100%;
+    padding: 1rem;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-sizing: border-box;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .search-container h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .search-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-row input,
+  .search-row select,
+  .search-row button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .result-card {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+
+  .result-card img {
+    height: auto;
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  .favorite-btn {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .results-container {
+    padding: 0.5rem;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .modal-content {
+    width: 90vw;
+    max-width: 90vw;
+    padding: 1.5rem;
+  }
+
+  .modal-content select {
+    width: 100%;
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+
+  .confirm-btn,
+  .cancel-btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+}

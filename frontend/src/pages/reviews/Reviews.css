@@ -93,3 +93,80 @@ div#review-button {
   background-color: transparent;
   box-shadow: 0 -0.5rem 0.5rem #000;
 }
+
+@media (max-width: 768px) {
+  div#reviews-list-container {
+    padding: 1rem;
+  }
+
+  div#reviews-list-container h2 {
+    font-size: 1.4rem;
+    margin: 0.5rem 0 1rem 0;
+    text-align: center;
+  }
+
+  div#recent-reviews {
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  div#recent-reviews a {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+
+  div#recent-reviews div.single-review {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  div#recent-reviews div.movie-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  div#recent-reviews img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  div#recent-reviews div.title-and-year {
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  div#recent-reviews div.review {
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+
+  div#recent-reviews div.review h4 {
+    padding-left: 0;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  div#recent-reviews p {
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5rem;
+    height: auto;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  div#review-button {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: none;
+    position: static;
+  }
+}

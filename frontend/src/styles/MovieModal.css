@@ -162,3 +162,52 @@
     scrollbar-width: thin;
     scrollbar-color: #444 #1a1a1a;
 }
+
+/* RESPONSIIVISUUS */
+
+@media (max-width: 1024px) {
+  .modal-layout {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .modal-poster {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .modal-info {
+    min-width: unset;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .modal-info h2 {
+    text-align: center;
+  }
+
+  .modal-info p {
+    text-align: left;
+    font-size: 1rem;
+  }
+
+  .scroll-box {
+    max-height: 250px;
+    padding: 0.75rem;
+  }
+
+  .movie-modal-overlay {
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .movie-modal-content {
+    max-height: none;
+    overflow: visible;
+  }
+
+
+}

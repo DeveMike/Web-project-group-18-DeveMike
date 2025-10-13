@@ -109,6 +109,17 @@ export default function GroupsHub() {
     }
   }
 
+  // mobiili
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   /* -------------------- lataukset -------------------- */
   const loadLists = useCallback(async () => {
     setLoading(true);
@@ -275,6 +286,8 @@ export default function GroupsHub() {
     }
   };
 
+  
+
   /* -------------------- UI helpers -------------------- */
   const Pill = ({ children }) => (
     <span style={{ padding: "2px 8px", borderRadius: 999, fontSize: 12, background: "var(--color-surface)" }}>
@@ -296,7 +309,15 @@ export default function GroupsHub() {
 
   /* -------------------- render -------------------- */
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: 16 }}>
+    <div
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        padding: 16,
+        width: "100%",
+        boxSizing: "border-box",
+      }}>
+
       {/* yläpalkki + palauteviestit */}
       <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
         <h1 style={{ margin: 0 }}>Ryhmät</h1>
@@ -338,7 +359,15 @@ export default function GroupsHub() {
       </div>
 
       {/* Omat & kaikki ryhmät */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+      <div
+        style={{
+          display: isMobile ? "flex" : "grid",
+          flexDirection: isMobile ? "column" : undefined,
+          gridTemplateColumns: isMobile ? undefined : "1fr 1fr",
+          gap: 16,
+          marginTop: 16,
+        }}>
+
         <Panel title="Omat ryhmät">
           {loading && !myGroups.length && <div>Ladataan…</div>}
           {!loading && !myGroups.length && <div>Ei ryhmiä vielä.</div>}
@@ -417,7 +446,15 @@ export default function GroupsHub() {
       </div>
 
       {/* Pääpaneelit: jäsenet | keskialue | info+admin */}
-      <div style={{ display: "grid", gridTemplateColumns: "300px 1fr 320px", gap: 16 }}>
+      <div
+        style={{
+          display: isMobile ? "flex" : "grid",
+          flexDirection: isMobile ? "column" : undefined,
+          gridTemplateColumns: isMobile ? undefined : "300px 1fr 320px",
+          gap: 16,
+          marginTop: 16,
+        }}>
+
         {/* Jäsenet */}
         <Panel
           title={`Jäsenet (${members.filter((m) => m.status === "approved").length})`}
@@ -534,7 +571,15 @@ export default function GroupsHub() {
 
       {/* Omistajan työkalut */}
       {role === "owner" && group && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
+        <div
+          style={{
+            display: isMobile ? "flex" : "grid",
+            flexDirection: isMobile ? "column" : undefined,
+            gridTemplateColumns: isMobile ? undefined : "1fr 1fr",
+            gap: 16,
+            marginTop: 16,
+          }}>
+
           <Panel title="Liittymispyynnöt">
             {!requests.length && <div>Ei odottavia pyyntöjä.</div>}
             <div style={{ display: "grid", gap: 8 }}>
