@@ -14,7 +14,7 @@ const getImgBaseUrl = async () => {
     const response = await fetch('https://api.themoviedb.org/3/configuration', options)
     const data = await response.json()
     if(response.status === 200) {
-      const imgBaseUrl = data.images.base_url
+      const imgBaseUrl = data.images.base_url+'w185'
       return imgBaseUrl
     } else {
       return Error("Couldn't get image base url")
@@ -106,8 +106,8 @@ const add = async (req, res, next) => {
           +' VALUES ($1, $2, $3, $4, $5, $6, $7)'
           +' RETURNING *;',
           [
-            data.id.toString(), data.title, data.overview, imgBaseUrl+'w185'+data.poster_path,
-            data.release_date ? parseInt(data.release_date.slice(0, 4)) : null, genreName, data.vote_average, 
+            data.id, data.title, data.overview, imgBaseUrl+data.poster_path,
+            parseInt(data.release_date.slice(0, 4)), genreName, data.vote_average, 
           ]
         )
         if(result.rowCount === 1) {
@@ -145,7 +145,10 @@ const search = async (req, res, next) => {
     )
     const data = await response.json()
     if(response.status === 200) {
-      return res.status(200).json(data)
+      const imgBaseUrl = await getImgBaseUrl()
+      return res.status(200).json({img_base_url: imgBaseUrl, results: data.results})
+    } else if(response.status(404)) {
+      return res.status(404).json({ error: "Haulla ei löytynyt elokuvia" })
     } else {
       return next(Error("TMDB-haku ei onnistunut"))
     }
@@ -154,21 +157,4 @@ const search = async (req, res, next) => {
   }
 }
 
-const getPopular = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      apiUrl + 'movie/popular?language=fi-FI',
-      options
-    );
-    const data = await response.json();
-    if (response.status === 200) {
-      return res.status(200).json(data);
-    } else {
-      return next(new Error("TMDB-haku ei onnistunut"));
-    }
-  } catch (err) {
-    return next(err);
-  }
-};
-
-module.exports = { add, search, getPopular }
+module.exports = { add, search, getImgBaseUrl }

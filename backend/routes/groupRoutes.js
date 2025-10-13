@@ -19,5 +19,10 @@ router.post('/:id/leave', authenticateToken, groupController.leaveGroup);
 router.get('/:id', authenticateToken, groupController.getGroup);
 router.delete('/:id', authenticateToken, groupController.deleteGroup);
 
-module.exports = router;
+router.post('/:id/movies', authenticateToken, groupController.addMovieToGroup)
+router.get('/:id/movies', authenticateToken, groupController.getGroupMovies)
 
+router.post('/:id/showtimes', authenticateToken, groupController.addShowtimeToGroup)
+router.get('/:id/showtimes', authenticateToken, groupController.getGroupShowtimes)
+
+module.exports = router;

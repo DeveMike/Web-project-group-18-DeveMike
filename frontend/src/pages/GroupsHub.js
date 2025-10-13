@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import GroupService from "../services/groupService";
+import MovieCard from "../components/MovieCard";
 /*import "../styles/GroupsHub.css";*/
 
 
@@ -33,6 +34,80 @@ export default function GroupsHub() {
   useEffect(() => () => clearTimeout(clearRef.current), []);
 
   const role = useMemo(() => (group ? group._userRole : null), [group]);
+
+  // elokuvat & näytösajat
+  const apiUrl = 'http://localhost:3001/api/groups/'
+  const moviesLoadedId = useRef(-1)
+
+  // elokuvat
+  const [showMovies, setShowMovies] = useState(false)
+  const [movies, setMovies] = useState([])
+  const moviesLoading = useRef(false)
+  
+
+  useEffect(() => {
+    const fetchMovies = async (setMoviesCallback) => {
+      const response = await fetch(apiUrl+selectedId+'/movies', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer "+localStorage.getItem('token')
+        }
+      })
+      const result = await response.json()
+      console.log(result)
+      setMoviesCallback(result)
+    }
+    if((!moviesLoading.current || moviesLoadedId.current !== selectedId) && showMovies) {
+      moviesLoading.current = true
+      moviesLoadedId.current = selectedId
+      fetchMovies(setMovies)
+    }
+  }, [moviesLoading, showMovies, movies, setMovies,  moviesLoadedId, selectedId])
+
+  const toggleMovies = () => {
+    if(showMovies) {
+      setShowMovies(false)
+      moviesLoading.current = false
+    } else {
+      setShowMovies(true)
+    }
+  }
+
+  // näytösajat
+  const [showShowtimes, setShowShowtimes] = useState(false)
+  const [showtimes, setShowtimes] = useState([])
+  const showtimesLoading = useRef(false)
+  const showtimesLoadedId = useRef(-1)
+
+  useEffect(() => {
+    const fetchShowtimes = async (setShowtimesCallback) => {
+      const response = await fetch(apiUrl+selectedId+'/showtimes', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer "+localStorage.getItem('token')
+        }
+      })
+      const result = await response.json()
+      console.log(result)
+      setShowtimesCallback(result)
+    }
+    if((!showtimesLoading.current || showtimesLoadedId.current !== selectedId) && showShowtimes) {
+      showtimesLoading.current = true
+      showtimesLoadedId.current = selectedId
+      fetchShowtimes(setShowtimes)
+    }
+  }, [showtimesLoading, showShowtimes, showtimes, setShowtimes,  showtimesLoadedId, selectedId])
+
+  const toggleShowtimes = () => {
+    if(showShowtimes) {
+      setShowShowtimes(false)
+      showtimesLoading.current = false
+    } else {
+      setShowShowtimes(true)
+    }
+  }
 
   // mobiili
 
@@ -565,7 +640,45 @@ export default function GroupsHub() {
           </Panel>
         </div>
       )}
+
+      <div id="group-content" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 16 }}>
+        <Panel title="Ryhmän elokuvat">
+          <button id="show-group-movies" onClick={toggleMovies}>
+            {(showMovies) ? "Piilota elokuvat" : "Näytä elokuvat"}
+          </button>
+          {showMovies && movies.length > 0 && (
+            <div id="group-movies" style={{ display: "grid", gap: 8 }}>
+              {movies.map((m) => (
+                <MovieCard title={m.title} image={m.poster_url} year={m.release_year} />
+              ))}
+            </div>
+          )}
+        </Panel>
+        <Panel title="Ryhmän näytösajat">
+          <button id="show-group-showtimes" onClick={toggleShowtimes}>
+            {(showShowtimes) ? "Piilota näytösajat" : "Näytä näytösajat"}
+          </button>
+          {showShowtimes && showtimes.length > 0 && (
+            <div id="group-showtimes" style={{ display: "grid", gap: 8 }}>
+              {showtimes.map((st) => (
+                <div className="group-showtime">
+                  <img src={st.image_url} />
+                  <h3>{st.movie_title}</h3>
+                  <p>{new Date(st.showtime).toLocaleDateString('fi-FI', {
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      weekday: 'long',
+                      day: 'numeric',
+                      month: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </Panel>
+      </div>
     </div>
   );
 }
-
