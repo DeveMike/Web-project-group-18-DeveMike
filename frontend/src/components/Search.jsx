@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Search.css";
 import { addMovieToList, getFavoriteLists } from "../services/favoritesService";
+import { AddMovieToGroup } from "./groupModals";
 
 const GENRES = [
   { id: 28, name: "Toiminta" },
@@ -22,6 +23,7 @@ export default function Search() {
   const [favoriteLists, setFavoriteLists] = useState([]);
   const [selectedList, setSelectedList] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showGroupModal, setShowGroupModal] = useState(false)
   const [movieToAdd, setMovieToAdd] = useState(null);
 
   const isLoggedIn = !!localStorage.getItem("token");
@@ -46,6 +48,11 @@ export default function Search() {
     setMovieToAdd(movie);
     setShowModal(true);
   };
+
+  const openGroupModal = (movie) => {
+    setMovieToAdd(movie)
+    setShowGroupModal(true)
+  }
 
   const handleConfirmAddFavorite = async () => {
     try {
@@ -115,7 +122,7 @@ export default function Search() {
 
   //UI
   return (
-    <div className="search-container">
+    <div className="search-container" id="search">
       <h2>🎬 Elokuvahaku</h2>
 
       <div className="search-row">
@@ -152,66 +159,77 @@ export default function Search() {
 
       {loading && <p>Ladataan…</p>}
 
-      {showModal && (
+      {(showModal || showGroupModal) && (
         <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Valitse suosikkilista</h3>
-            <select
-              value={selectedList}
-              onChange={(e) => setSelectedList(e.target.value)}
-            >
-              {favoriteLists.map((list) => (
-                <option key={list.list_id} value={list.list_id}>
-                  {list.list_name}
-                </option>
-              ))}
-            </select>
-            <div className="modal-buttons">
-              <button
-                className="confirm-btn"
-                onClick={handleConfirmAddFavorite}
-              >Vahvista</button>
-              <button
-                className="cancel-btn"
-                onClick={() => {
-                  setShowModal(false);
-                  setMovieToAdd(null);
-                }}
-              >Peruuta</button>
+          {showModal && (
+            <div className="modal-content">
+              <h3>Valitse suosikkilista</h3>
+              <select
+                value={selectedList}
+                onChange={(e) => setSelectedList(e.target.value)}
+              >
+                {favoriteLists.map((list) => (
+                  <option key={list.list_id} value={list.list_id}>
+                    {list.list_name}
+                  </option>
+                ))}
+              </select>
+              <div className="modal-buttons">
+                <button
+                  className="confirm-btn"
+                  onClick={handleConfirmAddFavorite}
+                >Vahvista</button>
+                <button
+                  className="cancel-btn"
+                  onClick={() => {
+                    setShowModal(false);
+                    setMovieToAdd(null);
+                  }}
+                >Peruuta</button>
+              </div>
             </div>
-          </div>
+          )}
+          {showGroupModal && (
+            <div className="modal-content">
+              <AddMovieToGroup onClose={() => setShowGroupModal(false)} tmdbMovie={movieToAdd} />
+            </div>
+          )}
+          
         </div>
       )}
 
-      <div className="results-container">
-        <div className="results-grid">
-          {results.map((m) => (
-            <div key={m.id} className="result-card">
-              {m.poster_path ? (
-                <img
-                  src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}
-                  alt={m.title}
-                />
-              ) : (
-                <div className="poster-placeholder">Ei kuvaa</div>
-              )}
-              <h4>{m.title}</h4>
-              <p>
-                {m.release_date?.slice(0, 4) || "N/A"} •{" "}
-                {m.vote_average
-                  ? m.vote_average.toFixed(1) + "/10"
-                  : "Ei arvosanaa"}
-              </p>
-              {isLoggedIn && (
+      <div className="results-grid">
+        {results.map((m) => (
+          <div key={m.id} className="result-card">
+            {m.poster_path ? (
+              <img
+                src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}
+                alt={m.title}
+              />
+            ) : (
+              <div className="poster-placeholder">Ei kuvaa</div>
+            )}
+            <h4>{m.title}</h4>
+            <p>
+              {m.release_date?.slice(0, 4) || "N/A"} •{" "}
+              {m.vote_average
+                ? m.vote_average.toFixed(1) + "/10"
+                : "Ei arvosanaa"}
+            </p>
+            {isLoggedIn && (
+              <div className="result-buttons">
                 <button
                   className="favorite-btn"
                   onClick={() => handleAddFavorite(m)}>
                   ⭐ Lisää suosikkeihin
                 </button>
-              )}
-            </div>
-          ))}
-        </div>
+                <button className="add-movie-to-group" onClick={() => openGroupModal(m)}>
+                  Lisää ryhmään
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
