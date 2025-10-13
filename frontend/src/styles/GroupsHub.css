@@ -212,3 +212,73 @@
   color: #000;
   font-weight: bold;
 }
+
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .groups-hub-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .groups-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+    margin-bottom: 16px;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .panel {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .groups-header,
+  .groups-actions,
+  .groups-buttons,
+  .groups-all-search,
+  .groups-owner-tools {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .groups-actions input,
+  .groups-actions button,
+  .groups-all-search input,
+  .groups-all-item button,
+  .groups-buttons button,
+  .groups-member-item button {
+    width: 100%;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .groups-all-item,
+  .groups-member-item {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .groups-center {
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
