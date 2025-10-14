@@ -160,7 +160,7 @@ export default function Search() {
       {loading && <p>Ladataan…</p>}
 
       {(showModal || showGroupModal) && (
-        <div className="modal-overlay">
+        <div className="modal-overlay" id="group-modal-overlay">
           {showModal && (
             <div className="modal-content">
               <h3>Valitse suosikkilista</h3>
