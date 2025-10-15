@@ -73,6 +73,7 @@ div#recent-reviews div.review h4 {
 }
 
 div#recent-reviews p {
+  color: #000;
   display: -webkit-box;
   min-width: 0;
   -webkit-line-clamp: 5;

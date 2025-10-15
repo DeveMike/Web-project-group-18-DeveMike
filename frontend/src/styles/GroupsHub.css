@@ -213,6 +213,35 @@
   font-weight: bold;
 }
 
+/* näytösajat */
+#group-content button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #FFD700;
+  color: #000;
+  font-weight: bold;
+  border: none;
+}
+
+#group-content button:hover {
+  background-color: #e6c200;
+}
+
+.group-showtime {
+  margin: 1rem;
+  border: 1px solid #000;
+  border-radius: 8px;
+}
+
+.group-showtime * {
+  padding: 0.5rem;
+}
+
+.group-showtime img {
+  height: 14rem;
+}
+
 @media (max-width: 768px) {
   html, body {
     width: 100%;

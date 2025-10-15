@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import GroupService from "../services/groupService";
 import MovieCard from "../components/MovieCard";
-/*import "../styles/GroupsHub.css";*/
+import "../styles/GroupsHub.css";
 
 
 export default function GroupsHub() {

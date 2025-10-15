@@ -145,6 +145,7 @@
 }
 
 /* Scrollbar modaalin pääsisällölle */
+/*
 .modal-content::-webkit-scrollbar {
     width: 8px;
 }
@@ -162,6 +163,7 @@
     scrollbar-width: thin;
     scrollbar-color: #444 #1a1a1a;
 }
+*/
 
 /* RESPONSIIVISUUS */
 
@@ -210,4 +212,46 @@
   }
 
 
+}
+
+/* ryhmät */
+
+.group-showtime-modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.group-showtime-modal-content {
+  background: #222;
+  color: #eee;
+  padding: 32px 24px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 30vw;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.showtime-day .showtimes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.showtimes .showtime {
+  border: 1px solid #f5c518;
+  border-radius: 8px;
+  margin: 0.3rem;
+}
+
+.showtime button {
+  margin: 0 0.3rem 0.3rem;
+  border-radius: 6px;
+}
+
+.showtime button:hover {
+  background-color: #e0af14;
+  transform: scale(1.05);
 }

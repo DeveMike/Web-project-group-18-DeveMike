@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/MovieModal.css';
-
 import { AddShowtimeToGroup } from './groupModals';
+import '../styles/MovieModal.css';
 
 function MovieModal({ movie, area, onClose }) {
     const areaId = area.id
@@ -104,7 +103,7 @@ function MovieModal({ movie, area, onClose }) {
     return (
         <div className="movie-modal-overlay">
             {showGroupModal && (
-                <div className="modal-overlay">
+                <div className="modal-overlay" id="group-modal-overlay">
                     <div className="modal-content">
                         <AddShowtimeToGroup onClose={() => setShowGroupModal(false)} showtime={showtimeToAdd}/>
                     </div>
