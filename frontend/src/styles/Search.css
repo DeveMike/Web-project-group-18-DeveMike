@@ -17,9 +17,8 @@
 .results-scroll {
   flex: 1 1 auto;
   overflow-y: auto;
-  /* Add safe gutter so hover glow isn't clipped by container edges */
-  padding: 12px 10px 10px 12px; /* top | right | bottom | left */
-  margin-top: 12px;             /* a bit more space under header */
+  padding: 12px 10px 10px 12px;
+  margin-top: 12px;
 }
 
 

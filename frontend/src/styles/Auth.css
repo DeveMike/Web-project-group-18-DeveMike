@@ -208,6 +208,12 @@
   background-color: #e6c200;
 }
 
+.auth-welcome p{
+  color: #FFD700;
+  text-align: center;
+
+}
+
 
 
 /* Responsive */

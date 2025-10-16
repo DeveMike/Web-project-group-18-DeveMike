@@ -31,6 +31,7 @@ function Navbar() {
 
       <ul className={`navbar-links ${menuOpen ? 'active' : ''}`}>
         {/* Kaikille näkyvät linkit */}
+        <li><Link to="/" onClick={handleLinkClick}>Etusivu</Link></li>
         <li><Link to="/search" onClick={handleLinkClick}>Haku</Link></li>
         <li><Link to="/reviews" onClick={handleLinkClick}>Arvostelut</Link></li>
         <li><Link to="/showtimes" onClick={handleLinkClick}>Näytösajat</Link></li>

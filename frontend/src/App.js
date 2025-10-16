@@ -17,6 +17,7 @@ import WriteReview from './pages/reviews/WriteReview';
 import Review from './pages/reviews/SingleReview';
 import Favorites from './pages/Favorites';
 import FavoritesShared from "./pages/FavoritesShared";
+import Home from "./pages/Home.jsx";
 
 import './App.css';
 import './styles/theme-styles.css';
@@ -28,7 +29,6 @@ function App() {
             <Router>
                 <Navbar />
                 <Routes>
-                    <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/showtimes" element={<Showtimes />} />
@@ -38,6 +38,7 @@ function App() {
                     <Route path="/reviews/write" element={<SearchFilmToReview />} />
                     <Route path="/reviews/write/:id" element={<WriteReview />} />
                     <Route path="/reviews/:id" element={<Review />} />
+                    <Route path="/" element={<Home />} />
                     <Route
                         path="/dashboard"
                         element={
