@@ -14,6 +14,14 @@
   overflow-y: auto;
 }
 
+.results-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  /* Add safe gutter so hover glow isn't clipped by container edges */
+  padding: 12px 10px 10px 12px; /* top | right | bottom | left */
+  margin-top: 12px;             /* a bit more space under header */
+}
+
 
 .search-container h2 {
   margin-bottom: 20px;
@@ -158,7 +166,7 @@
   border-radius: 12px;
   min-width: 320px;
   max-width: 30vw;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 24px rgba(219, 184, 60, 0.779);
   text-align: center;
 }
 .modal-content select {
