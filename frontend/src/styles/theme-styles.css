@@ -30,18 +30,21 @@ body {
 
 /* ========== DEFAULT TEEMA ========== */
 body[data-theme="default"] {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-img: url('../assets/movie-background-collage2.jpg');
+  background: var(--color-background);
 }
+
+/* pysyy paikallaan ja sisältö skrollaa päällä */
 body[data-theme="default"]::before {
   content: "";
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.35) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.35) 0%, transparent 50%);
-  animation: floatingBubbles 20s ease-in-out infinite;
+  background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), var(--bg-img);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 /* Sisältö nousee kuvien ylle */
